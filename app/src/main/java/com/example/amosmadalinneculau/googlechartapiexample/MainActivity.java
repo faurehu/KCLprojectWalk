@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,11 +26,14 @@ public class MainActivity extends AppCompatActivity {
     private WebView webview;
     private JSONArray data;
     private BackgroundTask task;
+    private ArrayList<Point> allData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        allData = new ArrayList<Point>();
 
         webview = (WebView) findViewById(R.id.webView);
         WebSettings webSettings = webview.getSettings();
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         webview.loadUrl("file:///android_asset/chartAPI.html");
         task = new BackgroundTask();
         task.execute();
+
     }
 
     @Override
@@ -66,18 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... Void) {
-            try {
-                data = new JSONArray(readData("http://api.worldbank.org/countries/all/indicators/NY.GDP.MKTP.CD?date=2002:2002&format=json"));
-                System.out.println(data);
-                JSONArray x = (JSONArray) data.get(1);
-                JSONObject y = (JSONObject) x.get(0);
-                Log.v("data", y.get("value").toString());
-//                publishProgress();
-            } catch (IOException e) {
-                System.out.println("Can't read data");
-            } catch (JSONException e) {
-                Log.e("JSON", e.toString());
-            }
+            getData();
             return null;
         }
 
@@ -85,6 +79,35 @@ public class MainActivity extends AppCompatActivity {
 //        protected void onProgressUpdate(Void... progress) {
 //            setData();
 //        }
+
+        private void getData(){
+            try {
+                data = new JSONArray(readData("http://api.worldbank.org/countries/br/indicators/NY.GDP.MKTP.CD?date=1960:2010&format=json"));
+                System.out.println(data);
+                //JSONArray x = (JSONArray) data.get(1);
+                //JSONObject y = (JSONObject) x.get(0);
+                //Log.v("data", y.get("value").toString());
+                JSONArray x = (JSONArray) data.get(1);
+                for(int i = 1; i<x.length(); ++i){
+                    JSONObject y = (JSONObject) x.get(i);
+//
+//                    JSONObject z = (JSONObject) x.get(3);
+
+                    Point p = new Point(y.get("value").toString(),y.get("date").toString());
+                    allData.add(p);
+                }
+
+                for(int i = 0; i<allData.size(); ++i){
+                    Log.i("points", allData.get(i).toString());
+                }
+
+//                publishProgress();
+            } catch (IOException e) {
+                System.out.println("Can't read data");
+            } catch (JSONException e) {
+                Log.e("JSON", e.toString());
+            }
+        }
 
         private String readData(String urlName) throws IOException {
             StringBuffer buffer = new StringBuffer();
