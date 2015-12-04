@@ -41,6 +41,8 @@ import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
 import tyrantgit.explosionfield.ExplosionField;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     /*Declaring some variables*/
@@ -83,14 +85,18 @@ public class MainActivity extends AppCompatActivity {
         };
         explosion.setOnClickListener(ourOnclickListener);
 
-
-
-
         initAnim();
         bgSound();
         choosingCountry();
         // Other Stuff
+
+
+
     }
+
+
+    /**/
+
 
     // HelloChart
     public static class PlaceholderFragment extends Fragment {
@@ -533,6 +539,7 @@ public class MainActivity extends AppCompatActivity {
         /*FloatingActionsMenu 1 & its countries */
         FloatingActionButton country1 = new FloatingActionButton(getBaseContext());
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.japan_flag);
+        country1.setSize(FloatingActionButton.SIZE_MINI);
         country1.setBackground(drawable);
         FloatingActionButton country2 = new FloatingActionButton(getBaseContext());
         final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);

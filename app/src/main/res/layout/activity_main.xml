@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_walk_mdpi"
@@ -8,52 +8,100 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.edu.www.v1kings.MainActivity"
     android:id="@+id/mainLayout">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
-        android:id="@+id/linLayoutLeft">
+        android:id="@+id/linLayoutLeft"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Claim:"
+            android:id="@+id/textView" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/frameLayout"></FrameLayout>
+            android:layout_height="231dp"
+            android:id="@+id/frameLayout"
+            android:layout_weight="0.56"></FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Line Desc:"
+            android:id="@+id/textView2" />
+
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="217dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:id="@+id/linLayoutRight">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Button"
+                    android:id="@+id/button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ToggleButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/toggleMusik"
+                    android:background="@drawable/music_playing"
+                    android:textOff=""
+                    android:textOn=""
+                    android:layout_alignParentTop="true"
+                    android:layout_alignEnd="@+id/multiple_actions3" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/relLayout">
 
-            <ToggleButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:id="@+id/toggleMusik"
-                android:background="@drawable/music_playing"
-                android:textOff=""
-                android:textOn=""
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/multiple_actions3"
-                android:layout_alignEnd="@+id/multiple_actions3"
-                android:layout_marginTop="30dp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewExplTest"
+                android:src="@drawable/exploding_test"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
             <com.getbase.floatingactionbutton.FloatingActionsMenu
                 android:id="@+id/multiple_actions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                fab:fab_addButtonSize="mini"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@+id/multiple_actions2"
                 android:layout_toStartOf="@+id/multiple_actions2">
@@ -65,7 +113,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@+id/multiple_actions3"
-                android:layout_toStartOf="@+id/multiple_actions3">
+                android:layout_toStartOf="@+id/multiple_actions3"
+                fab:fab_addButtonSize="mini"
+                >
             </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
             <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -77,16 +127,11 @@
                 android:layout_alignParentEnd="true">
             </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageViewExplTest"
-                android:src="@drawable/exploding_test"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 
-    </LinearLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
 
