@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_walk_mdpi"
@@ -8,29 +8,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/mainLayout">
+    android:id="@+id/mainLayout"
+    android:weightSum="1">
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="349dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:id="@+id/linLayoutLeft"
         android:weightSum="1">
 
-        <TextView
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="Claim:"-->
+        <!--android:id="@+id/textView" />-->
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Claim:"
-            android:id="@+id/textView" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Toogle Area"
+
+                android:id="@+id/button" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Toogle Labels"
+                android:id="@+id/button2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Square"
+                android:id="@+id/button3" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="231dp"
             android:id="@+id/frameLayout"
-            android:layout_weight="0.56"></FrameLayout>
+            android:layout_weight="0.76"></FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,90 +70,117 @@
         android:orientation="horizontal"
         android:layout_width="217dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/linLayoutRight">
+        android:id="@+id/linLayoutRight"
+        android:layout_weight="0.75">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Claim:"
+            android:id="@+id/textView" />
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout">
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <Button
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/button" />
-            </LinearLayout>
+                    android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/lineLayout"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
-                <ToggleButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/toggleMusik"
-                    android:background="@drawable/music_playing"
-                    android:textOff=""
-                    android:textOn=""
-                    android:layout_alignParentTop="true"
-                    android:layout_alignEnd="@+id/multiple_actions3" />
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country1"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country2"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country3"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lineLayout2"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country4"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country5"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/country6"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            app:cb_color="#8d6e63"
+                            app:cb_pressedRingWidth="8dip"
+                            android:layout_gravity="bottom"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/relLayout">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageViewExplTest"
-                android:src="@drawable/exploding_test"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/multiple_actions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_addButtonSize="mini"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/multiple_actions2"
-                android:layout_toStartOf="@+id/multiple_actions2">
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/multiple_actions2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/multiple_actions3"
-                android:layout_toStartOf="@+id/multiple_actions3"
-                fab:fab_addButtonSize="mini"
-                >
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/multiple_actions3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-
-        </RelativeLayout>
+        <ToggleButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/toggleMusik"
+            android:background="@drawable/music_playing"
+            android:textOff=""
+            android:textOn=""
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/linearLayout" />
 
 
     </RelativeLayout>
