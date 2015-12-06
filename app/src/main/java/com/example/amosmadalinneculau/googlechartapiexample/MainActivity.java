@@ -1,5 +1,6 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     ToggleButton bgMusik;
     MediaPlayer mediaPlayer;
     ImageView explosion;
+    TextView ourClaim;
+
 
     private ExplosionField explosionTest;
 
@@ -125,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
         initAnim();
         bgSound();
         choosingCountry();
+
+        /*Font testing*/
+        Typeface Font1 = Typeface.createFromAsset(getAssets(), "green_avocado.ttf");
+        ourClaim = (TextView) findViewById(R.id.ourClaim);
+        ourClaim.setTypeface(Font1);
+
+
         // Other Stuff
         listeners = new ButtonListeners(country1, country2, country3, country4, country5, country6);
         listeners.contry1Listener();

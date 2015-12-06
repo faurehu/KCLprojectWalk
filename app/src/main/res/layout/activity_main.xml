@@ -88,11 +88,13 @@
 
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Claim:"
-            android:id="@+id/textView" />
+            android:text="Claim -"
+            android:textSize="50dp"
+            android:id="@+id/ourClaim" />
 
 
         <LinearLayout
