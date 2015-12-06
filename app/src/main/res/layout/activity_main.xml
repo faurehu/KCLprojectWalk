@@ -39,7 +39,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Area "
+                android:text=" highlight "
                 android:background="#8d6e63"
                 android:id="@+id/button" />
             <View
