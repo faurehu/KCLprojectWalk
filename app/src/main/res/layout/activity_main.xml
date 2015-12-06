@@ -27,27 +27,40 @@
         <!--android:id="@+id/textView" />-->
 
         <LinearLayout
+            android:id="@+id/graphOpt"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_weight="1" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toogle Area"
-
+                android:text=" Area "
+                android:background="#8d6e63"
                 android:id="@+id/button" />
-
+            <View
+                android:layout_width="10dp"
+                android:layout_height="5dp"
+                android:layout_weight="1" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toogle Labels"
+                android:text=" Labels "
+                android:background="#8d6e63"
                 android:id="@+id/button2" />
-
+            <View
+                android:layout_width="10dp"
+                android:layout_height="5dp"
+                android:layout_weight="1" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Square"
+                android:background="#8d6e63"
+                android:text=" Square "
                 android:id="@+id/button3" />
         </LinearLayout>
 
@@ -81,10 +94,6 @@
             android:text="Claim:"
             android:id="@+id/textView" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -94,15 +103,13 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/linearLayout">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/countries"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
 
                     <LinearLayout
                         android:id="@+id/lineLayout"
@@ -111,30 +118,33 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
 
-                        <Button
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country1"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_uk" />
-                        <Button
+                            android:src="@drawable/flag_uk"
+                            />
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country2"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_us" />
-                        <Button
+                            android:src="@drawable/flag_us"
+                            />
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country3"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_de" />
+                            android:src="@drawable/flag_de"
+                            />
 
                     </LinearLayout>
 
@@ -145,37 +155,36 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
 
-                        <Button
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country4"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_australia" />
-                        <Button
+                            android:src="@drawable/flag_australia"
+                            />
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country5"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_india" />
-                        <Button
+                            android:src="@drawable/flag_india"
+                            />
+                        <at.markushi.ui.CircleButton
                             android:id="@+id/country6"
                             android:layout_width="64dip"
                             android:layout_height="64dip"
                             app:cb_color="#8d6e63"
                             app:cb_pressedRingWidth="8dip"
                             android:layout_gravity="bottom"
-                            android:background="@drawable/flag_china" />
+                            android:src="@drawable/flag_china"
+                            />
 
                     </LinearLayout>
-
-
                 </LinearLayout>
-            </LinearLayout>
-
         </LinearLayout>
 
         <ToggleButton
@@ -185,9 +194,8 @@
             android:background="@drawable/music_playing"
             android:textOff=""
             android:textOn=""
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/linearLayout" />
-
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

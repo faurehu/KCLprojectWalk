@@ -9,14 +9,26 @@ import android.widget.Button;
  */
 public class ButtonListeners{
 
-    private Button country1;
-    private Button country2;
-    private Button country3;
-    private Button country4;
-    private Button country5;
-    private Button country6;
+//    private Button country1;
+//    private Button country2;
+//    private Button country3;
+//    private Button country4;
+//    private Button country5;
+//    private Button country6;
 
-    public ButtonListeners(Button country1, Button country2, Button country3, Button country4, Button country5, Button country6){
+    private at.markushi.ui.CircleButton country1;
+    private at.markushi.ui.CircleButton country2;
+    private at.markushi.ui.CircleButton country3;
+    private at.markushi.ui.CircleButton country4;
+    private at.markushi.ui.CircleButton country5;
+    private at.markushi.ui.CircleButton country6;
+
+    public ButtonListeners(at.markushi.ui.CircleButton country1,
+                           at.markushi.ui.CircleButton country2,
+                           at.markushi.ui.CircleButton country3,
+                           at.markushi.ui.CircleButton country4,
+                           at.markushi.ui.CircleButton country5,
+                           at.markushi.ui.CircleButton country6){
         this.country1 = country1;
         this.country2 = country2;
         this.country3 = country3;

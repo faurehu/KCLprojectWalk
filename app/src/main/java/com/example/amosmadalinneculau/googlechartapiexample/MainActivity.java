@@ -65,8 +65,8 @@ import tyrantgit.explosionfield.ExplosionField;
 public class MainActivity extends AppCompatActivity {
 
     /*Declaring some variables*/
+    LinearLayout countries;
     LinearLayout mainLayout;
-    LinearLayout linLayoutLeft;
     LinearLayout linLayoutRight;
     FrameLayout frameLayout;
     RelativeLayout relLayout;
@@ -77,12 +77,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ExplosionField explosionTest;
 
-    public static Button country1;
-    public static Button country2;
-    public static Button country3;
-    public static Button country4;
-    public static Button country5;
-    public static Button country6;
+//    public static Button country1;
+//    public static Button country2;
+//    public static Button country3;
+//    public static Button country4;
+//    public static Button country5;
+//    public static Button country6;
+
+    public static at.markushi.ui.CircleButton country1;
+    public static at.markushi.ui.CircleButton country2;
+    public static at.markushi.ui.CircleButton country3;
+    public static at.markushi.ui.CircleButton country4;
+    public static at.markushi.ui.CircleButton country5;
+    public static at.markushi.ui.CircleButton country6;
+
+
 
     public static ButtonListeners listeners;
 
@@ -118,14 +127,10 @@ public class MainActivity extends AppCompatActivity {
         choosingCountry();
         // Other Stuff
         listeners = new ButtonListeners(country1, country2, country3, country4, country5, country6);
-
         listeners.contry1Listener();
-
 
     }
 
-
-    /**/
 
 
     // HelloChart
@@ -151,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
-
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                     bt.execute("gb");
                 }
             });
-
             country2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -178,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
                     bt.execute("de");
                 }
             });
-
             country4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -194,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                     bt.execute("ind");
                 }
             });
-
             country6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -397,16 +398,15 @@ public class MainActivity extends AppCompatActivity {
     /*Intro*/
     public void initAnim() {
 
-        // relLayout = (RelativeLayout) findViewById(R.id.relLayout);
-        //relLayout.startAnimation(vertAnimeTra);
+        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        mainLayout.startAnimation(vertAnimeTra);
 
         bgMusik = (ToggleButton) findViewById(R.id.toggleMusik);
-        bgMusik.startAnimation(horAnimeTra);
+        bgMusik.startAnimation(vertAnimeTra);
 
     }
 
     public void bgSound() {
-
         mediaPlayer = MediaPlayer.create(this, R.raw.music_play);
         bgMusik.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,41 +424,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void choosingCountry() {
 
-        /*FloatingActionsMenu 1 & its countries */
-//        FloatingActionButton country1 = new FloatingActionButton(getBaseContext());
-//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.japan_flag);
-//        country1.setSize(FloatingActionButton.SIZE_MINI);
-//        country1.setBackground(drawable);
-//        FloatingActionButton country2 = new FloatingActionButton(getBaseContext());
-//        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
-//        menuMultipleActions.startAnimation(vertAnimeTra);
-//        menuMultipleActions.addButton(country1);
-//        menuMultipleActions.addButton(country2);
-//
-//
-//        /*FloatingActionsMenu 2 & its countries */
-//        FloatingActionButton country3 = new FloatingActionButton(getBaseContext());
-//        FloatingActionButton country4 = new FloatingActionButton(getBaseContext());
-//        final FloatingActionsMenu menuMultipleActions2 = (FloatingActionsMenu) findViewById(R.id.multiple_actions2);
-//        menuMultipleActions2.startAnimation(vertAnimeTra);
-//        menuMultipleActions2.addButton(country3);
-//        menuMultipleActions2.addButton(country4);
-//
-//        /*FloatingActionsMenu 3 & its countries */
-//        FloatingActionButton country5 = new FloatingActionButton(getBaseContext());
-//        FloatingActionButton country6 = new FloatingActionButton(getBaseContext());
-//        final FloatingActionsMenu menuMultipleActions3 = (FloatingActionsMenu) findViewById(R.id.multiple_actions3);
-//        menuMultipleActions3.startAnimation(vertAnimeTra);
-//        menuMultipleActions3.addButton(country5);
-//        menuMultipleActions3.addButton(country6);
+        countries = (LinearLayout) findViewById(R.id.countries);
+        countries.startAnimation(horAnimeTra);
 
-        country1 = (Button) findViewById(R.id.country1);
-        country2 = (Button) findViewById(R.id.country2);
-        country3 = (Button) findViewById(R.id.country3);
-        country4 = (Button) findViewById(R.id.country4);
-        country5 = (Button) findViewById(R.id.country5);
-        country6 = (Button) findViewById(R.id.country6);
+        country1 = (at.markushi.ui.CircleButton) findViewById(R.id.country1);
+        country2 = (at.markushi.ui.CircleButton) findViewById(R.id.country2);
+        country3 = (at.markushi.ui.CircleButton) findViewById(R.id.country3);
+        country4 = (at.markushi.ui.CircleButton) findViewById(R.id.country4);
+        country5 = (at.markushi.ui.CircleButton) findViewById(R.id.country5);
+        country6 = (at.markushi.ui.CircleButton) findViewById(R.id.country6);
 
     }
-    //Other Stuff
 }
