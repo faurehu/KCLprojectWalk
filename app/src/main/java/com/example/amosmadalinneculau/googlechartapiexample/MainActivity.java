@@ -26,8 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,24 +67,16 @@ public class MainActivity extends AppCompatActivity {
     /*Declaring some variables*/
     LinearLayout countries;
     LinearLayout mainLayout;
-    LinearLayout linLayoutRight;
-    FrameLayout frameLayout;
-    RelativeLayout relLayout;
     Animation vertAnimeTra, horAnimeTra;
     ToggleButton bgMusik;
     MediaPlayer mediaPlayer;
-    ImageView explosion;
     TextView ourClaim;
 
 
     private ExplosionField explosionTest;
+    ImageView explosion;
 
-//    public static Button country1;
-//    public static Button country2;
-//    public static Button country3;
-//    public static Button country4;
-//    public static Button country5;
-//    public static Button country6;
+
 
     public static at.markushi.ui.CircleButton country1;
     public static at.markushi.ui.CircleButton country2;
