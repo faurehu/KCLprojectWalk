@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -66,17 +67,19 @@ public class MainActivity extends AppCompatActivity {
 
     /*Declaring some variables*/
     LinearLayout countries;
-    LinearLayout mainLayout;
+    RelativeLayout mainLayout;
     Animation vertAnimeTra, horAnimeTra;
     ToggleButton bgMusik;
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
+    public static ImageButton buttonSquare;
+    public static ImageButton buttonLabels;
+    public static ImageButton buttonToggleFilled;
+    public static ImageButton buttonReset;
 
-    private ExplosionField explosionTest;
-    ImageView explosion;
-
-
+    static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
+    static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
 
     public static at.markushi.ui.CircleButton country1;
     public static at.markushi.ui.CircleButton country2;
@@ -92,11 +95,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
+
+        //FindView button
+        buttonSquare = (ImageButton) findViewById(R.id.button3);
+        buttonLabels = (ImageButton) findViewById(R.id.button2);
+        buttonToggleFilled = (ImageButton) findViewById(R.id.button);
+        buttonReset = (ImageButton) findViewById(R.id.button4);
 
         // HelloChart
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new PlaceholderFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.graph_area, new PlaceholderFragment()).commit();
         }
         // HelloChart
 
@@ -104,17 +113,6 @@ public class MainActivity extends AppCompatActivity {
         vertAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_ver1);
         horAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_hor1);
 
-        /*Intro Explaining Image (commented temporarily)*/
-//        explosionTest = ExplosionField.attach2Window(this);
-//        explosion = (ImageView) findViewById(R.id.imageViewExplTest);
-//        View.OnClickListener ourOnclickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                explosionTest.explode(v);
-//                v.setOnClickListener(null);
-//            }
-//        };
-//        explosion.setOnClickListener(ourOnclickListener);
 
         initAnim();
         bgSound();
@@ -159,6 +157,75 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
+
+            //SQUARE BUTTON LISTENER
+            buttonSquare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(shape == ValueShape.CIRCLE)
+                    {
+                        shape = ValueShape.SQUARE;
+                        renderLines(exportsData, GDPData);
+                    }
+                    else
+                    {
+                        shape = ValueShape.CIRCLE;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                }
+            });
+            //END OF SQUARE BUTTON LISTENER
+
+            //TOGLE LABELS BUTTON LISTENER
+            buttonLabels.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (hasLabels == false) {
+                        hasLabels = true;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                    else
+                    {
+                        hasLabels = false;
+                        renderLines(exportsData, GDPData);
+                    }
+                }
+            });
+            //END OF TOGLE LABELS LISTENER
+
+            //TOGGLE FILLED
+
+            buttonToggleFilled.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isFilled == false)
+                    {
+                        isFilled = true;
+                        renderLines(exportsData, GDPData);
+                    }
+                    else
+                    {
+                        isFilled = false;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                }
+            });
+
+            //END OF TOGGLE FILLED
+
+            //RESET BUTTON
+            buttonReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    resetViewport();
+                    renderLines(exportsData, GDPData);
+
+                }
+            });
+            //END OF RESET BUTTON
 
             country1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -397,9 +464,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Other Stuff
     /*Intro*/
-    public void initAnim() {
+   public void initAnim() {
 
-        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mainLayout.startAnimation(vertAnimeTra);
 
         bgMusik = (ToggleButton) findViewById(R.id.toggleMusik);

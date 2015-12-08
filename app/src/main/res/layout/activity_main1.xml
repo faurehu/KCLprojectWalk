@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bklow"
+    >
+
+
+    <TextView
+        android:id="@+id/ourClaim"
+        android:layout_width="503dp"
+        android:layout_height="wrap_content"
+        android:text="When interest rates rise, imports will fall"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="35dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@null"
+        android:src="@drawable/info"
+        android:layout_marginStart="136dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ourClaim" />
+    <ToggleButton
+        android:id="@+id/toggleMusik"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/music_playing"
+        android:textOff=""
+        android:textOn=""
+        android:layout_alignParentRight="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ourClaim">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:weightSum="1">
+
+
+            <FrameLayout
+                android:layout_width="729dp"
+                android:layout_height="319dp"
+                android:id="@+id/graph_area"
+                android:layout_weight="0.52"></FrameLayout>
+
+            <include
+                android:id="@+id/togbg"
+                layout="@layout/layout_toggle_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"></include>
+
+
+        </LinearLayout>
+
+
+        <include
+            android:layout_alignParentRight="true"
+            android:id="@+id/key"
+            layout="@layout/layout_keys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></include>
+
+        <include
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/countries"
+            layout="@layout/layout_country_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></include>
+    </RelativeLayout>
+
+</RelativeLayout>

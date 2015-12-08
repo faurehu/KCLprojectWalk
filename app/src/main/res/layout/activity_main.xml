@@ -68,7 +68,10 @@
             android:layout_width="match_parent"
             android:layout_height="231dp"
             android:id="@+id/frameLayout"
-            android:layout_weight="0.76"></FrameLayout>
+            android:layout_weight="0.76">
+
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -92,8 +95,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Claim -"
-            android:textSize="50dp"
             android:id="@+id/ourClaim" />
 
 
