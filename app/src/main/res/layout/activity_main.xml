@@ -17,7 +17,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:id="@+id/linLayoutLeft"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_weight="0.73">
 
         <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" highlight "
-                android:background="#8d6e63"
+                android:background="#f3fffc"
                 android:id="@+id/button" />
             <View
                 android:layout_width="10dp"
@@ -50,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" Labels "
-                android:background="#8d6e63"
+                android:background="#f3fffc"
                 android:id="@+id/button2" />
             <View
                 android:layout_width="10dp"
@@ -59,7 +60,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#8d6e63"
+                android:background="#f3fffc"
                 android:text=" Square "
                 android:id="@+id/button3" />
         </LinearLayout>
@@ -80,14 +81,20 @@
             android:text="Line Desc:"
             android:id="@+id/textView2" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frameLayout"
+            android:layout_above="@+id/linearLayout"
+            android:layout_alignParentStart="true"></FrameLayout>
+
     </LinearLayout>
 
     <RelativeLayout
         android:orientation="horizontal"
-        android:layout_width="217dp"
+        android:layout_width="471dp"
         android:layout_height="match_parent"
-        android:id="@+id/linLayoutRight"
-        android:layout_weight="0.75">
+        android:id="@+id/linLayoutRight">
 
 
         <TextView
@@ -96,6 +103,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/ourClaim" />
+            android:text="As interest rates edcrease, imports of goods and services rise"
+            android:textSize="20dp"
+            android:id="@+id/ourClaim"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/linearLayout" />
 
 
         <LinearLayout
