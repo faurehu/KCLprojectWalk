@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public static at.markushi.ui.CircleButton country4;
     public static at.markushi.ui.CircleButton country5;
     public static at.markushi.ui.CircleButton country6;
-
+    public boolean []countriesOnGraph;
 
 
     public static ButtonListeners listeners;
@@ -98,6 +98,20 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new PlaceholderFragment()).commit();
         }
+
+        countriesOnGraph= new boolean[5];
+        //UK
+        countriesOnGraph[0] = false;
+        //US
+        countriesOnGraph[1] = false;
+        //DE
+        countriesOnGraph[2] = false;
+        //AUS
+        countriesOnGraph[3] = false;
+        //IND
+        countriesOnGraph[4] = false;
+        //CN
+        countriesOnGraph[5] = false;
         // HelloChart
 
 
@@ -148,57 +162,81 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     Log.i("Reached here", "UK deselect");
+                    countriesOnGraph[0] = false;
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     Log.i("Reached here", "UK select");
+                    countriesOnGraph[0] = true;
                 }
                 return true;
             case R.id.check_US:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[1] = false;
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[1] = true;
                 }
                 return true;
             case R.id.check_AUS:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[3] = false;
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[3] = true;
+
                 }
                 return true;
             case R.id.check_CN:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[5] = false;
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[5] = true;
                 }
                 return true;
             case R.id.check_DE:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[2] = false;
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[2] = true;
+                }
+                return true;
+            case R.id.check_IND:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                    //delete line
+                    countriesOnGraph[4] = false;
+                }
+                else {
+                    item.setChecked(true);
+                    //add line
+                    countriesOnGraph[4] = true;
                 }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     // HelloChart
     public static class PlaceholderFragment extends Fragment {
@@ -222,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem itm;
 
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
@@ -236,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("gb");
+
                 }
             });
             country2.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
 
             List<Line> lines = new ArrayList<Line>();
 
