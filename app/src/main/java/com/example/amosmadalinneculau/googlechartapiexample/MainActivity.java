@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new PlaceholderFragment()).commit();
         }
 
-        countriesOnGraph= new boolean[5];
+        countriesOnGraph= new boolean[6];
         //UK
         countriesOnGraph[0] = false;
         //US
@@ -330,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             chart.setCurrentViewport(v);
         }
 
+        //protected void renderLines(HashMap exportsData, HashMap GDPData) {
         protected void renderLines(HashMap exportsData, HashMap GDPData) {
 
             class stringComparator implements Comparator<Map.Entry<Integer, Float>> {
@@ -351,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
             List<PointValue> exportsValues = new ArrayList<PointValue>();
             Set<Map.Entry<Integer, Float>> exportsEntrySet = exportsData.entrySet();
             SortedSet<Map.Entry<Integer, Float>> sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            SortedSet<Map.Entry<Integer, Float>> sortedSet1 = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
             Iterator it = exportsEntrySet.iterator();
             while(it.hasNext()) {
                 sortedSet.add((Map.Entry)it.next());
@@ -361,18 +363,27 @@ public class MainActivity extends AppCompatActivity {
                 exportsValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
             }
 
+            for(int i=0; i<exportsValues.size(); ++i){
+                Log.i("FIRST LINE Value: ",""+exportsValues.get(i).toString());
+            }
+
+
             List<PointValue> GDPValues = new ArrayList<PointValue>();
-            Set<Map.Entry<Integer, Float>> GDPEntrySet = exportsData.entrySet();
-            sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            Set<Map.Entry<Integer, Float>> GDPEntrySet = GDPData.entrySet();
+            sortedSet1 = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
             it = GDPEntrySet.iterator();
             while(it.hasNext()) {
-                sortedSet.add((Map.Entry)it.next());
+                sortedSet1.add((Map.Entry)it.next());
             }
-            it = sortedSet.iterator();
+            it = sortedSet1.iterator();
             while(it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
-                GDPValues.add(new PointValue(1,1));
+
+            }
+
+            for(int i=0; i<GDPValues.size(); ++i){
+                Log.i("SECOND LINE Value: ",""+GDPValues.get(i).toString());
             }
 
             Line exportsLine = new Line(exportsValues);
@@ -464,6 +475,8 @@ public class MainActivity extends AppCompatActivity {
             protected Void doInBackground(String... country) {
                 String GDPUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
                 String exportsUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
+                //String GDPUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
+                //String exportsUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
                 try {
                     String exportsResponse  = readData(exportsUrl);
                     String GDPResponse = readData(GDPUrl);
