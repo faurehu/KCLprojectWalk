@@ -53,7 +53,7 @@
             <FrameLayout
                 android:layout_width="729dp"
                 android:layout_height="319dp"
-                android:id="@+id/graph_area"
+                android:id="@+id/frameLayout"
                 android:layout_weight="0.52"></FrameLayout>
 
             <include

@@ -1,26 +1,20 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,8 +41,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import lecho.lib.hellocharts.animation.ChartAnimationListener;
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -57,10 +49,7 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
-import tyrantgit.explosionfield.ExplosionField;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -217,13 +206,14 @@ public class MainActivity extends AppCompatActivity {
         private boolean isCubic = false;
         private boolean hasLabelForSelected = false;
         private boolean pointsHaveDifferentColor;
+
         public BackgroundTask bt;
         MenuItem itm;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
+            View rootView = inflater.inflate(R.layout._fragment_line_chart, container, false);
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
@@ -345,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
             return rootView;
         }
+
 
         private void resetViewport() {
             // Reset viewport height range to (0,100)
@@ -526,10 +517,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onValueDeselected() {
-                // TODO Auto-generated method stub
-
-            }
+            public void onValueDeselected() {}
 
         }
     }
