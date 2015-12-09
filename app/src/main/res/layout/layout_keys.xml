@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:src="@drawable/key" />
+        android:src="@drawable/key"
+        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,7 +23,8 @@
             android:layout_height="wrap_content"
             android:text="UK Interest Rates"
             android:id="@+id/ukIR"
-            android:background="#0097f4" />
+            android:background="#0097f4"
+            />
 
         <TextView
             android:layout_width="wrap_content"

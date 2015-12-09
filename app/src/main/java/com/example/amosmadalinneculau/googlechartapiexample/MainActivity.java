@@ -19,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -72,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
+    public static ImageButton toggleArea, square, toggleLabels, reset;
+
+    static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
+    static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
+
+
+
 
     private ExplosionField explosionTest;
     ImageView explosion;
@@ -89,10 +97,16 @@ public class MainActivity extends AppCompatActivity {
 
     public static ButtonListeners listeners;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+
+        square = (ImageButton) findViewById(R.id.button3);
+        toggleLabels = (ImageButton) findViewById(R.id.button2);
+        toggleArea = (ImageButton) findViewById(R.id.button);
+        reset = (ImageButton) findViewById(R.id.button4);
 
         // HelloChart
         if (savedInstanceState == null) {
@@ -270,6 +284,77 @@ public class MainActivity extends AppCompatActivity {
 
             bt = new BackgroundTask();
 
+
+
+            //SQUARE BUTTON LISTENER
+            square.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(shape == ValueShape.CIRCLE)
+                    {
+                        shape = ValueShape.SQUARE;
+                        renderLines(exportsData, GDPData);
+                    }
+                    else
+                    {
+                        shape = ValueShape.CIRCLE;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                }
+            });
+            //END OF SQUARE BUTTON LISTENER
+
+            //TOGLE LABELS BUTTON LISTENER
+            toggleLabels.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (hasLabels == false) {
+                        hasLabels = true;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                    else
+                    {
+                        hasLabels = false;
+                        renderLines(exportsData, GDPData);
+                    }
+                }
+            });
+            //END OF TOGLE LABELS LISTENER
+
+            //TOGGLE FILLED
+
+            toggleArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isFilled == false)
+                    {
+                        isFilled = true;
+                        renderLines(exportsData, GDPData);
+                    }
+                    else
+                    {
+                        isFilled = false;
+                        renderLines(exportsData, GDPData);
+                    }
+
+                }
+            });
+
+            //END OF TOGGLE FILLED
+
+            //RESET BUTTON
+            reset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    resetViewport();
+                    renderLines(exportsData, GDPData);
+
+                }
+            });
+            //END OF RESET BUTTON
+
             country1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -300,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
                     bt.execute("aus");
                 }
             });
-//
+
             country5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
