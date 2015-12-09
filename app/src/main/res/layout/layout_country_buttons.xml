@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout">
+
+
+        <LinearLayout
+            android:id="@+id/countries"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/lineLayout"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country1"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_uk"
+                    />
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country2"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_us"
+                    />
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country3"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_de"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lineLayout2"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country4"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_australia"
+                    />
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country5"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_india"
+                    />
+                <at.markushi.ui.CircleButton
+                    android:id="@+id/country6"
+                    android:layout_width="64dip"
+                    android:layout_height="64dip"
+                    app:cb_color="#8d6e63"
+                    app:cb_pressedRingWidth="8dip"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/flag_china"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

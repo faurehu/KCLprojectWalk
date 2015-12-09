@@ -1,22 +1,34 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import lecho.lib.hellocharts.animation.ChartAnimationListener;
-import lecho.lib.hellocharts.gesture.ZoomType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -25,7 +37,6 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class HelloChart extends AppCompatActivity {
@@ -34,6 +45,7 @@ public class HelloChart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_chart);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
@@ -46,11 +58,8 @@ public class HelloChart extends AppCompatActivity {
 
         private LineChartView chart;
         private LineChartData data;
-        private int numberOfLines = 1;
-        private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
-
-        float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
+        private int maxNumberOfLines = 6;
+        private int numberOfPoints = 50;
 
         private boolean hasAxes = true;
         private boolean hasAxesNames = true;
@@ -63,149 +72,18 @@ public class HelloChart extends AppCompatActivity {
         private boolean hasLabelForSelected = false;
         private boolean pointsHaveDifferentColor;
 
-        public PlaceholderFragment() {
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
+            View rootView = inflater.inflate(R.layout._fragment_line_chart, container, false);
 
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
-            // Generate some randome values.
-            generateValues();
-
-            generateData();
-
-            // Disable viewpirt recalculations, see toggleCubic() method for more info.
-            chart.setViewportCalculationEnabled(false);
-
-            resetViewport();
+            BackgroundTask bt = new BackgroundTask();
+            bt.execute("gb");
 
             return rootView;
-        }
-
-        // MENU
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.line_chart, menu);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == R.id.action_reset) {
-                reset();
-                generateData();
-                return true;
-            }
-            if (id == R.id.action_add_line) {
-                addLineToData();
-                return true;
-            }
-            if (id == R.id.action_toggle_lines) {
-                toggleLines();
-                return true;
-            }
-            if (id == R.id.action_toggle_points) {
-                togglePoints();
-                return true;
-            }
-            if (id == R.id.action_toggle_cubic) {
-                toggleCubic();
-                return true;
-            }
-            if (id == R.id.action_toggle_area) {
-                toggleFilled();
-                return true;
-            }
-            if (id == R.id.action_point_color) {
-                togglePointColor();
-                return true;
-            }
-            if (id == R.id.action_shape_circles) {
-                setCircles();
-                return true;
-            }
-            if (id == R.id.action_shape_square) {
-                setSquares();
-                return true;
-            }
-            if (id == R.id.action_shape_diamond) {
-                setDiamonds();
-                return true;
-            }
-            if (id == R.id.action_toggle_labels) {
-                toggleLabels();
-                return true;
-            }
-            if (id == R.id.action_toggle_axes) {
-                toggleAxes();
-                return true;
-            }
-            if (id == R.id.action_toggle_axes_names) {
-                toggleAxesNames();
-                return true;
-            }
-            if (id == R.id.action_animate) {
-                prepareDataAnimation();
-                chart.startDataAnimation();
-                return true;
-            }
-            if (id == R.id.action_toggle_selection_mode) {
-                toggleLabelForSelected();
-
-                Toast.makeText(getActivity(),
-                        "Selection mode set to " + chart.isValueSelectionEnabled() + " select any point.",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            if (id == R.id.action_toggle_touch_zoom) {
-                chart.setZoomEnabled(!chart.isZoomEnabled());
-                Toast.makeText(getActivity(), "IsZoomEnabled " + chart.isZoomEnabled(), Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            if (id == R.id.action_zoom_both) {
-                chart.setZoomType(ZoomType.HORIZONTAL_AND_VERTICAL);
-                return true;
-            }
-            if (id == R.id.action_zoom_horizontal) {
-                chart.setZoomType(ZoomType.HORIZONTAL);
-                return true;
-            }
-            if (id == R.id.action_zoom_vertical) {
-                chart.setZoomType(ZoomType.VERTICAL);
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-        private void generateValues() {
-            for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }
-        }
-
-        private void reset() {
-            numberOfLines = 1;
-
-            hasAxes = true;
-            hasAxesNames = true;
-            hasLines = true;
-            hasPoints = true;
-            shape = ValueShape.CIRCLE;
-            isFilled = false;
-            hasLabels = false;
-            isCubic = false;
-            hasLabelForSelected = false;
-            pointsHaveDifferentColor = false;
-
-            chart.setValueSelectionEnabled(hasLabelForSelected);
-            resetViewport();
         }
 
         private void resetViewport() {
@@ -219,36 +97,80 @@ public class HelloChart extends AppCompatActivity {
             chart.setCurrentViewport(v);
         }
 
-        private void generateData() {
+        protected void renderLines(HashMap exportsData, HashMap GDPData) {
+
+            class stringComparator implements Comparator<Map.Entry<Integer, Float>> {
+                @Override
+                public int compare(Map.Entry<Integer, Float> lhs, Map.Entry<Integer, Float> rhs) {
+                    if (lhs.getKey() > rhs.getKey()) {
+                        return 1;
+                    } else if ( lhs.getKey() == rhs.getKey()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
+            }
 
             List<Line> lines = new ArrayList<Line>();
-            for (int i = 0; i < numberOfLines; ++i) {
 
-                List<PointValue> values = new ArrayList<PointValue>();
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    values.add(new PointValue(j, randomNumbersTab[i][j]));
-                }
-
-                Line line = new Line(values);
-                line.setColor(ChartUtils.COLORS[i]);
-                line.setShape(shape);
-                line.setCubic(isCubic);
-                line.setFilled(isFilled);
-                line.setHasLabels(hasLabels);
-                line.setHasLabelsOnlyForSelected(hasLabelForSelected);
-                line.setHasLines(hasLines);
-                line.setHasPoints(hasPoints);
-                if (pointsHaveDifferentColor){
-                    line.setPointColor(ChartUtils.COLORS[(i + 1) % ChartUtils.COLORS.length]);
-                }
-                lines.add(line);
+            List<PointValue> exportsValues = new ArrayList<PointValue>();
+            Set<Map.Entry<Integer, Float>> exportsEntrySet = exportsData.entrySet();
+            SortedSet<Map.Entry<Integer, Float>> sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            Iterator it = exportsEntrySet.iterator();
+            while(it.hasNext()) {
+                sortedSet.add((Map.Entry)it.next());
             }
+            it = sortedSet.iterator();
+            while(it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                exportsValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
+            }
+
+            List<PointValue> GDPValues = new ArrayList<PointValue>();
+            Set<Map.Entry<Integer, Float>> GDPEntrySet = exportsData.entrySet();
+            sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            it = GDPEntrySet.iterator();
+            while(it.hasNext()) {
+                sortedSet.add((Map.Entry)it.next());
+            }
+            it = sortedSet.iterator();
+            while(it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
+            }
+
+            Line exportsLine = new Line(exportsValues);
+            Line GDPLine = new Line(GDPValues);
+
+            exportsLine.setColor(ChartUtils.COLOR_ORANGE);
+            exportsLine.setShape(shape);
+            exportsLine.setCubic(isCubic);
+            exportsLine.setFilled(isFilled);
+            exportsLine.setHasLabels(hasLabels);
+            exportsLine.setHasLabelsOnlyForSelected(hasLabelForSelected);
+            exportsLine.setHasLines(hasLines);
+            exportsLine.setHasPoints(hasPoints);
+
+            GDPLine.setColor(ChartUtils.COLOR_BLUE);
+            GDPLine.setShape(shape);
+            GDPLine.setCubic(isCubic);
+            GDPLine.setFilled(isFilled);
+            GDPLine.setHasLabels(hasLabels);
+            GDPLine.setHasLabelsOnlyForSelected(hasLabelForSelected);
+            GDPLine.setHasLines(hasLines);
+            GDPLine.setHasPoints(hasPoints);
+
+            lines.add(GDPLine);
+            lines.add(exportsLine);
 
             data = new LineChartData(lines);
 
             if (hasAxes) {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
+                axisX.setLineColor(ChartUtils.DEFAULT_DARKEN_COLOR);
+                axisY.setLineColor(ChartUtils.DEFAULT_DARKEN_COLOR);
                 if (hasAxesNames) {
                     axisX.setName("Axis X");
                     axisY.setName("Axis Y");
@@ -262,164 +184,75 @@ public class HelloChart extends AppCompatActivity {
 
             data.setBaseValue(Float.NEGATIVE_INFINITY);
             chart.setLineChartData(data);
+//            chart.setViewportCalculationEnabled(false);
 
+//            resetViewport();
         }
 
-        /**
-         * Adds lines to data, after that data should be set again with
-         * {@link LineChartView#setLineChartData(LineChartData)}. Last 4th line has non-monotonically x values.
-         */
-        private void addLineToData() {
-            if (data.getLines().size() >= maxNumberOfLines) {
-                Toast.makeText(getActivity(), "Samples app uses max 4 lines!", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                ++numberOfLines;
-            }
+        protected void parseData(String exportsJson, String GDPJson) {
 
-            generateData();
-        }
+            HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
+            HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
 
-        private void toggleLines() {
-            hasLines = !hasLines;
-
-            generateData();
-        }
-
-        private void togglePoints() {
-            hasPoints = !hasPoints;
-
-            generateData();
-        }
-
-        private void toggleCubic() {
-            isCubic = !isCubic;
-
-            generateData();
-
-            if (isCubic) {
-                // It is good idea to manually set a little higher max viewport for cubic lines because sometimes line
-                // go above or below max/min. To do that use Viewport.inest() method and pass negative value as dy
-                // parameter or just set top and bottom values manually.
-                // In this example I know that Y values are within (0,100) range so I set viewport height range manually
-                // to (-5, 105).
-                // To make this works during animations you should use Chart.setViewportCalculationEnabled(false) before
-                // modifying viewport.
-                // Remember to set viewport after you call setLineChartData().
-                final Viewport v = new Viewport(chart.getMaximumViewport());
-                v.bottom = -5;
-                v.top = 105;
-                // You have to set max and current viewports separately.
-                chart.setMaximumViewport(v);
-                // I changing current viewport with animation in this case.
-                chart.setCurrentViewportWithAnimation(v);
-            } else {
-                // If not cubic restore viewport to (0,100) range.
-                final Viewport v = new Viewport(chart.getMaximumViewport());
-                v.bottom = 0;
-                v.top = 100;
-
-                // You have to set max and current viewports separately.
-                // In this case, if I want animation I have to set current viewport first and use animation listener.
-                // Max viewport will be set in onAnimationFinished method.
-                chart.setViewportAnimationListener(new ChartAnimationListener() {
-
-                    @Override
-                    public void onAnimationStarted() {
-                        // TODO Auto-generated method stub
-
+            try {
+                JSONArray exportsArray = new JSONArray(exportsJson);
+                Log.i("exportsArray", exportsArray.toString());
+                JSONArray GDPArray = new JSONArray(GDPJson);
+                JSONArray exportsValues = (JSONArray) exportsArray.get(1);
+                JSONArray GDPValues = (JSONArray) GDPArray.get(1);
+                for(int i = 1; i<exportsValues.length(); ++i){
+                    JSONObject exportsNode = (JSONObject) exportsValues.get(i);
+                    JSONObject GDPNode = (JSONObject) GDPValues.get(i);
+                    Log.i("date", exportsNode.get("date").getClass().toString());
+                    Log.i("value", exportsNode.get("value").getClass().toString());
+                    try {
+                        exportsData.put(Integer.parseInt((String) exportsNode.get("date")), Float.parseFloat((String) exportsNode.get("value")));
+                        GDPData.put(Integer.parseInt((String) GDPNode.get("date")), Float.parseFloat((String) GDPNode.get("value")));
+                    } catch (ClassCastException e) {
+                        Log.e("ClassCastException", e.toString());
                     }
-
-                    @Override
-                    public void onAnimationFinished() {
-                        // Set max viewpirt and remove listener.
-                        chart.setMaximumViewport(v);
-                        chart.setViewportAnimationListener(null);
-
-                    }
-                });
-                // Set current viewpirt with animation;
-                chart.setCurrentViewportWithAnimation(v);
-            }
-
-        }
-
-        private void toggleFilled() {
-            isFilled = !isFilled;
-
-            generateData();
-        }
-
-        private void togglePointColor() {
-            pointsHaveDifferentColor = !pointsHaveDifferentColor;
-
-            generateData();
-        }
-
-        private void setCircles() {
-            shape = ValueShape.CIRCLE;
-
-            generateData();
-        }
-
-        private void setSquares() {
-            shape = ValueShape.SQUARE;
-
-            generateData();
-        }
-
-        private void setDiamonds() {
-            shape = ValueShape.DIAMOND;
-
-            generateData();
-        }
-
-        private void toggleLabels() {
-            hasLabels = !hasLabels;
-
-            if (hasLabels) {
-                hasLabelForSelected = false;
-                chart.setValueSelectionEnabled(hasLabelForSelected);
-            }
-
-            generateData();
-        }
-
-        private void toggleLabelForSelected() {
-            hasLabelForSelected = !hasLabelForSelected;
-
-            chart.setValueSelectionEnabled(hasLabelForSelected);
-
-            if (hasLabelForSelected) {
-                hasLabels = false;
-            }
-
-            generateData();
-        }
-
-        private void toggleAxes() {
-            hasAxes = !hasAxes;
-
-            generateData();
-        }
-
-        private void toggleAxesNames() {
-            hasAxesNames = !hasAxesNames;
-
-            generateData();
-        }
-
-        /**
-         * To animate values you have to change targets values and then call {@link Chart#startDataAnimation()}
-         * method(don't confuse with View.animate()). If you operate on data that was set before you don't have to call
-         * {@link LineChartView#setLineChartData(LineChartData)} again.
-         */
-        private void prepareDataAnimation() {
-            for (Line line : data.getLines()) {
-                for (PointValue value : line.getValues()) {
-                    // Here I modify target only for Y values but it is OK to modify X targets as well.
-                    value.setTarget(value.getX(), (float) Math.random() * 100);
                 }
+            } catch (JSONException e) {
+                Log.e("JSON", e.toString());
+            }
+
+            renderLines(exportsData, GDPData);
+        }
+
+        public class BackgroundTask extends AsyncTask<String, Void, Void> {
+            @Override
+            protected Void doInBackground(String... country) {
+                String GDPUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/NE.EXP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
+                String exportsUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
+                try {
+                    String exportsResponse  = readData(exportsUrl);
+                    String GDPResponse = readData(GDPUrl);
+                    Log.i("exports response", exportsUrl);
+                    parseData(exportsResponse, GDPResponse);
+                } catch (IOException e) {
+                    Log.e("ERROR", "IOException");
+                }
+                return null;
+            }
+
+            public String readData(String urlName) throws IOException {
+                StringBuffer buffer = new StringBuffer();
+                URL url = new URL(urlName);
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoInput(true);
+                connection.connect();
+                BufferedReader in;
+                in = new BufferedReader(
+                        new InputStreamReader(connection.getInputStream()));
+                String inputLine = in.readLine();
+                while (inputLine != null) {
+                    buffer.append(inputLine);
+                    inputLine = in.readLine();
+                }
+                in.close();
+                connection.disconnect();
+                return buffer.toString();
             }
         }
 
