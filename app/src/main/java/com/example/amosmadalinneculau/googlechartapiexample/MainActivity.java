@@ -1,5 +1,6 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -26,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.PopupWindow;
+
 
 
 import org.json.JSONArray;
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         toggleLabels = (ImageButton) findViewById(R.id.button2);
         toggleArea = (ImageButton) findViewById(R.id.button);
         reset = (ImageButton) findViewById(R.id.button4);
+        infoButton = (ImageButton) findViewById(R.id.info);
 
         // HelloChart
         if (savedInstanceState == null) {
@@ -276,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // HelloChart
-    public static class PlaceholderFragment extends Fragment {
+    public class PlaceholderFragment extends Fragment {
 
         private LineChartView chart;
         private LineChartData data;
@@ -307,11 +311,12 @@ public class MainActivity extends AppCompatActivity {
 
             bt = new BackgroundTask();
 
-//            infoButton.setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View v) {
-//                    startActivity(new Intent(MainActivity.this,Pop.class));
-//                }
-//            });
+            infoButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,Pop.class));
+                }
+            });
+
 
             //SQUARE BUTTON LISTENER
             square.setOnClickListener(new View.OnClickListener() {
