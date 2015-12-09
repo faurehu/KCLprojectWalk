@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
                     bt.execute("aus");
                 }
             });
-
+//
             country5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
