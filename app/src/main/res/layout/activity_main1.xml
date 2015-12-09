@@ -22,19 +22,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:background="@null"
-        android:src="@drawable/info"
+        android:src="@drawable/info3"
         android:layout_marginStart="136dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ourClaim" />
     <ToggleButton
         android:id="@+id/toggleMusik"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/music_playing"
         android:textOff=""
         android:textOn=""
         android:layout_alignParentRight="true"
-        />
+        android:checked="false" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -68,11 +68,12 @@
 
 
         <include
-            android:layout_alignParentRight="true"
             android:id="@+id/key"
             layout="@layout/layout_keys"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></include>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/countries"></include>
 
         <include
             android:layout_alignParentRight="true"
