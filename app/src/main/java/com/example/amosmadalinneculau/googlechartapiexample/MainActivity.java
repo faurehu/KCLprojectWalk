@@ -93,11 +93,20 @@ public class MainActivity extends AppCompatActivity {
     public static at.markushi.ui.CircleButton country4;
     public static at.markushi.ui.CircleButton country5;
     public static at.markushi.ui.CircleButton country6;
-    public boolean []countriesOnGraph;
+    public static boolean []countriesOnGraph;
 
 
     public static ButtonListeners listeners;
 
+    public void printState(){
+        for(int i=0; i<countriesOnGraph.length; ++i)
+            Log.i("Country["+i+"]: ",""+countriesOnGraph[i]);
+    }
+
+    public void deselectAll(){
+        for(int i=0; i<countriesOnGraph.length; ++i)
+            countriesOnGraph[i] = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,12 +187,15 @@ public class MainActivity extends AppCompatActivity {
                     //delete line
                     Log.i("Reached here", "UK deselect");
                     countriesOnGraph[0] = false;
+
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     Log.i("Reached here", "UK select");
                     countriesOnGraph[0] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_US:
@@ -191,11 +203,13 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     countriesOnGraph[1] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     countriesOnGraph[1] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_AUS:
@@ -203,11 +217,13 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     countriesOnGraph[3] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     countriesOnGraph[3] = true;
+                    printState();
 
                 }
                 return true;
@@ -216,11 +232,13 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     countriesOnGraph[5] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     countriesOnGraph[5] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_DE:
@@ -228,11 +246,13 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     countriesOnGraph[2] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     countriesOnGraph[2] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_IND:
@@ -240,11 +260,13 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     countriesOnGraph[4] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     countriesOnGraph[4] = true;
+                    printState();
                 }
                 return true;
             default:
@@ -366,6 +388,10 @@ public class MainActivity extends AppCompatActivity {
                     bt = new BackgroundTask();
                     bt.execute("gb");
 
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[0] = true;
                 }
             });
             country2.setOnClickListener(new View.OnClickListener() {
@@ -373,6 +399,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("us");
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[1] = true;
                 }
             });
 
@@ -381,6 +412,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("de");
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[2] = true;
                 }
             });
             country4.setOnClickListener(new View.OnClickListener() {
@@ -388,6 +424,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("aus");
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[3] = true;
                 }
             });
 
@@ -396,6 +437,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("ind");
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[4] = true;
                 }
             });
             country6.setOnClickListener(new View.OnClickListener() {
@@ -403,6 +449,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("cn");
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[5] = true;
                 }
             });
 
