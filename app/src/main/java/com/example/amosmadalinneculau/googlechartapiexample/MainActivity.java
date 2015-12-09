@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
-    public static ImageButton toggleArea, square, toggleLabels, reset;
+    public static ImageButton toggleArea, square, toggleLabels, reset, infoButton;
+
 
     static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
@@ -284,7 +285,11 @@ public class MainActivity extends AppCompatActivity {
 
             bt = new BackgroundTask();
 
-
+//            infoButton.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    startActivity(new Intent(MainActivity.this,Pop.class));
+//                }
+//            });
 
             //SQUARE BUTTON LISTENER
             square.setOnClickListener(new View.OnClickListener() {
