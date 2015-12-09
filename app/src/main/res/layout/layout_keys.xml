@@ -1,14 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
         android:background="@null"
         android:src="@drawable/key" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UK Interest Rates"
+            android:id="@+id/ukIR"
+            android:background="#0097f4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UK Imports"
+            android:id="@+id/ukIM"
+            android:background="#f10f0f" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="US Interest Rates"
+            android:id="@+id/usIR"
+            android:background="#1ea068" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="US imports"
+            android:id="@+id/usIM"
+            android:background="#fff703" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Germany Interest Rates"
+            android:id="@+id/GerIR"
+            android:background="#f5ae0a" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Germany Imports"
+            android:id="@+id/GerIM"
+            android:background="#ff69b4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Australia Interest Rates"
+            android:id="@+id/AusIR"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Australia Imports"
+            android:id="@+id/AusIM"
+            android:background="#b03060" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="India Interest Rates"
+            android:id="@+id/IndIR"
+            android:background="#802a2a" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="India Imports"
+            android:id="@+id/IndIM"
+            android:background="#551a8b" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="China Interest Rates"
+            android:id="@+id/cnIR"
+            android:textColor="#ffffff"
+            android:background="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="China Imports"
+            android:id="@+id/cnIM"
+            android:background="#ffffff" />
+
+    </LinearLayout>
 
 </LinearLayout>

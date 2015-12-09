@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
 
         // HelloChart
         if (savedInstanceState == null) {
@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity {
 //        };
 //        explosion.setOnClickListener(ourOnclickListener);
 
-        initAnim();
-        bgSound();
+        //initAnim();
+        //bgSound();
         choosingCountry();
 
         /*Font testing*/
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
+            View rootView = inflater.inflate(R.layout._fragment_line_chart, container, false);
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
