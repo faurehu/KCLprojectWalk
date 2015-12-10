@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                     if(shape == ValueShape.CIRCLE)
                     {
                         shape = ValueShape.SQUARE;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
 
                     }
                     else
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (hasLabels == false) {
                         hasLabels = true;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
 
                     }
 
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                     if(isFilled == false)
                     {
                         isFilled = true;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
 
 
                     }
