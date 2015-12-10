@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*Declaring some variables*/
     LinearLayout countries;
-    LinearLayout mainLayout;
+    RelativeLayout mainLayout;
     Animation vertAnimeTra, horAnimeTra;
     ToggleButton bgMusik;
     MediaPlayer mediaPlayer;
@@ -70,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
-
-
-    private ExplosionField explosionTest;
-    ImageView explosion;
-
 
 
     public static at.markushi.ui.CircleButton country1;
@@ -148,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
 //        };
 //        explosion.setOnClickListener(ourOnclickListener);
 
-        //initAnim();
-        //bgSound();
+        initAnim();
+        bgSound();
         choosingCountry();
 
         /*Font testing*/
@@ -726,7 +722,7 @@ public class MainActivity extends AppCompatActivity {
     /*Intro*/
     public void initAnim() {
 
-        mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mainLayout.startAnimation(vertAnimeTra);
 
         bgMusik = (ToggleButton) findViewById(R.id.toggleMusik);
