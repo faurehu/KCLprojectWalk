@@ -342,6 +342,7 @@ public class MainActivity extends AppCompatActivity {
                         renderLines(exportsData, GDPData);
 
                     }
+
                 }
             });
             //END OF TOGLE LABELS LISTENER
@@ -356,11 +357,13 @@ public class MainActivity extends AppCompatActivity {
                         isFilled = true;
                         renderLines(exportsData, GDPData);
 
+
                     }
                     else
                     {
                         isFilled = false;
                         renderLines(exportsData, GDPData);
+
 
                     }
 
