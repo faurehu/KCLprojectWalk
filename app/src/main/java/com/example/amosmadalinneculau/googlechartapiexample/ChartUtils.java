@@ -40,7 +40,7 @@ public abstract class ChartUtils {
     public static final int COLOR_MAROON = Color.parseColor("#B03060");
 
     public static final int COLOR_YELLOW = Color.parseColor("#fff703");
-
+//
     public static final int[] COLORS;
     private static final float DARKEN_SATURATION = 1.1F;
     private static final float DARKEN_INTENSITY = 0.9F;
