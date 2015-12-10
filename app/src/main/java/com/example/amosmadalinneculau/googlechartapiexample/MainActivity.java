@@ -544,7 +544,7 @@ public class MainActivity extends AppCompatActivity {
             while(it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
-
+//
             }
 
             for(int i=0; i<GDPValues.size(); ++i){
