@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
 
 
-
-
     private ExplosionField explosionTest;
     ImageView explosion;
 
@@ -97,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public static at.markushi.ui.CircleButton country5;
     public static at.markushi.ui.CircleButton country6;
     public static boolean []countriesOnGraph;
+    public ArrayList<String> cntToAdd;
 
 
     public static ButtonListeners listeners;
@@ -121,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         toggleArea = (ImageButton) findViewById(R.id.button);
         reset = (ImageButton) findViewById(R.id.button4);
         infoButton = (ImageButton) findViewById(R.id.info);
+        cntToAdd = new ArrayList<String>();
 
         // HelloChart
         if (savedInstanceState == null) {
@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
                     //delete line
                     Log.i("Reached here", "UK deselect");
                     countriesOnGraph[0] = false;
-
                     printState();
+
                 }
                 else {
                     item.setChecked(true);
@@ -299,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
         private boolean pointsHaveDifferentColor;
         public BackgroundTask bt;
         MenuItem itm;
+        public String lastState;
 
 
 
@@ -309,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
+            lastState = "gb";
             bt = new BackgroundTask();
 
             infoButton.setOnClickListener(new View.OnClickListener() {
@@ -326,11 +328,13 @@ public class MainActivity extends AppCompatActivity {
                     {
                         shape = ValueShape.SQUARE;
                         renderLines(exportsData, GDPData);
+
                     }
                     else
                     {
                         shape = ValueShape.CIRCLE;
                         renderLines(exportsData, GDPData);
+
                     }
 
                 }
@@ -344,12 +348,14 @@ public class MainActivity extends AppCompatActivity {
                     if (hasLabels == false) {
                         hasLabels = true;
                         renderLines(exportsData, GDPData);
+
                     }
 
                     else
                     {
                         hasLabels = false;
                         renderLines(exportsData, GDPData);
+
                     }
                 }
             });
@@ -364,11 +370,13 @@ public class MainActivity extends AppCompatActivity {
                     {
                         isFilled = true;
                         renderLines(exportsData, GDPData);
+
                     }
                     else
                     {
                         isFilled = false;
                         renderLines(exportsData, GDPData);
+
                     }
 
                 }
@@ -387,11 +395,14 @@ public class MainActivity extends AppCompatActivity {
             });
             //END OF RESET BUTTON
 
+
+
             country1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("gb");
+                    lastState = "gb";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -404,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("us");
+                    lastState = "us";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -417,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("de");
+                    lastState = "de";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -429,6 +442,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("aus");
+                    lastState = "aus";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -442,6 +456,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("ind");
+                    lastState = "ind";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -454,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("cn");
+                    lastState = "cn";
 
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
@@ -475,6 +491,9 @@ public class MainActivity extends AppCompatActivity {
             chart.setMaximumViewport(v);
             chart.setCurrentViewport(v);
         }
+
+        public Line exportsLine;
+        public Line GDPLine;
 
         //protected void renderLines(HashMap exportsData, HashMap GDPData) {
         protected void renderLines(HashMap exportsData, HashMap GDPData) {
@@ -532,10 +551,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("SECOND LINE Value: ",""+GDPValues.get(i).toString());
             }
 
-            Line exportsLine = new Line(exportsValues);
-            Line GDPLine = new Line(GDPValues);
+            exportsLine = new Line(exportsValues);
+            GDPLine = new Line(GDPValues);
 
-            exportsLine.setColor(ChartUtils.COLOR_ORANGE);
+
+            setColors(cnt);
+
+            //exportsLine.setColor(ChartUtils.COLOR_RED);
             exportsLine.setShape(shape);
             exportsLine.setCubic(isCubic);
             exportsLine.setFilled(isFilled);
@@ -547,7 +569,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            GDPLine.setColor(ChartUtils.COLOR_BLUE);
+            //GDPLine.setColor(ChartUtils.COLOR_BLUE);
             GDPLine.setShape(shape);
             GDPLine.setCubic(isCubic);
             GDPLine.setFilled(isFilled);
@@ -585,6 +607,38 @@ public class MainActivity extends AppCompatActivity {
 //            resetViewport();
         }
 
+        public void setColors(String s){
+            switch(s){
+                case "gb":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_RED);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BLUE);
+                    break;
+                case "us":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_YELLOW);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_GREEN);
+                    break;
+                case "de":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_PINK);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_ORANGE);
+                    break;
+                case "aus":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_MAROON);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_GRAY);
+                    break;
+                case "ind":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BROWN);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_PURPLE);
+                    break;
+                case "cn":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_WHITE);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BLACK);
+                    break;
+                default:
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.DEFAULT_COLOR);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.DEFAULT_COLOR);
+            }
+        }
+
         protected void parseData(String exportsJson, String GDPJson) {
 
             HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
@@ -615,22 +669,28 @@ public class MainActivity extends AppCompatActivity {
             renderLines(exportsData, GDPData);
         }
 
+        public String cnt;
+
         public class BackgroundTask extends AsyncTask<String, Void, Void> {
 
             @Override
             protected Void doInBackground(String... country) {
+
+
+                cnt = country[0];
                 String GDPUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
                 String exportsUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
-                //String GDPUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
-                //String exportsUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
+
+                        //String GDPUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
+                        //String exportsUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
                 try {
-                    String exportsResponse  = readData(exportsUrl);
+                    String exportsResponse = readData(exportsUrl);
                     String GDPResponse = readData(GDPUrl);
                     Log.i("exports response", exportsUrl);
                     Log.i("gdp response", GDPUrl);
                     parseData(exportsResponse, GDPResponse);
                 } catch (IOException e) {
-                    Log.e("ERROR", "IOException");
+                            Log.e("ERROR", "IOException");
                 }
                 return null;
             }
