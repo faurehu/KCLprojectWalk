@@ -75,7 +75,7 @@ public class HelloChart extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            View rootView = inflater.inflate(R.layout._fragment_line_chart, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
 
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
