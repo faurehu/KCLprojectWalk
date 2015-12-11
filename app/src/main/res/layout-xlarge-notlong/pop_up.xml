@@ -17,11 +17,4 @@ Due to increased consumer spending and inflationary pressures, there will be a r
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="313dp"
-        android:layout_height="297dp"
-        android:text="Close"
-        android:id="@+id/button7"
-        android:layout_gravity="center_horizontal" />
-
 </LinearLayout>

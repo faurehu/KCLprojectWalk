@@ -35,7 +35,7 @@ public class Pop extends Activity {
 
         getWindow().setLayout((int)(width*0.8),(int)(height*.8));
 
-        closeBtn = (Button) findViewById(R.id.closeBtn);
+        //closeBtn = (Button) findViewById(R.id.closeBtn);
 
 
         /*closeBtn.setOnClickListener(new View.OnClickListener() {
