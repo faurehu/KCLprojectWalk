@@ -38,12 +38,12 @@ public class Pop extends Activity {
         closeBtn = (Button) findViewById(R.id.closeBtn);
 
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
+        /*closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(i);
             }
-        });
+        });*/
 
     }
 
