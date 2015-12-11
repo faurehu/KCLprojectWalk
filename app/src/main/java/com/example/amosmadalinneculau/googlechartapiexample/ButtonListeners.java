@@ -7,6 +7,7 @@ import android.widget.Button;
 /**
  * Created by amosmadalinneculau on 06.12.2015.
  */
+//listeners
 public class ButtonListeners{
 
 //    private Button country1;

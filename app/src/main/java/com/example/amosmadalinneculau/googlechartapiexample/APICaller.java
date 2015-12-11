@@ -18,6 +18,8 @@ import java.util.HashMap;
 /**
  * Created by faure on 09/12/2015.
  */
+
+//API CALLER AND DATA CACHEING
 public class APICaller extends AsyncTask<String, Void, Void> {
 
     @Override

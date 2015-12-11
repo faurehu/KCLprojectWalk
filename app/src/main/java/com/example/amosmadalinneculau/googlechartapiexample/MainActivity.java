@@ -65,27 +65,68 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
+    //Json Object in order to do the cacheing
     public static JSONObject cacheJSON;
+    //for cacheing
     public static SharedPreferences sharedPref;
 
+    /*
+    * toggleArea - button that changes the look of the graph
+    * square - button that changes the look of the graph
+    * toggleLabels - button that changes the look og the graph
+    * reset - button that reset the graph
+    * infoButton - button that initialize the Pop class in order to initialize the pop-up
+     */
     public static ImageButton toggleArea, square, toggleLabels, reset, infoButton;
 
-
+    /*
+    * HashMap exportsData - here we store the values that we get  from the WorldBank API
+    * HashMap GDPData - here we store the values that we get from the WorldBank API
+    *
+    * IMPORTANT:
+    *           *the variable exportsData stands for the following indicator: Interests
+    *           *the variable GDPData stands for the following indicator: Inports
+     */
     static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
 
+    /*
+    Buttons for countries we decided to include data in our project
+    * country1 = UK
+    * country2 = US
+    * country3 = DE
+    * country4 = AUS
+    * country5 = IND
+    * country6 = CN
+     */
     public static at.markushi.ui.CircleButton country1;
     public static at.markushi.ui.CircleButton country2;
     public static at.markushi.ui.CircleButton country3;
     public static at.markushi.ui.CircleButton country4;
     public static at.markushi.ui.CircleButton country5;
     public static at.markushi.ui.CircleButton country6;
+
+    //this array keeps track of what we choose to show on graph
+    //Helper in order to add more countries on graph (something we wanted to do but we didn't manage to do because of the lack of time)
+    /*
+    6 slots:
+        *countriesOnGraph[0] indicates UK
+        * *countriesOnGraph[1] indicates US
+        * *countriesOnGraph[2] indicates DE
+        * *countriesOnGraph[3] indicates AUS
+        * *countriesOnGraph[4] indicates IND
+        * *countriesOnGraph[5] indicates CN
+
+     */
     public static boolean []countriesOnGraph;
+
+    //Helper in order to add more countries on graph (something we wanted to do but we didn't manage to do because of the lack of time)
     public ArrayList<String> cntToAdd;
 
-
+    //Object of ButtonListeners class
     public static ButtonListeners listeners;
 
+    //Print the countriesOnGraph array
     public void printState(){
         for(int i=0; i<countriesOnGraph.length; ++i)
             Log.i("Country["+i+"]: ",""+countriesOnGraph[i]);
@@ -96,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
 
+        //INITIALIZATION OF OBJECTS
         square = (ImageButton) findViewById(R.id.button3);
         toggleLabels = (ImageButton) findViewById(R.id.button2);
         toggleArea = (ImageButton) findViewById(R.id.button);
@@ -106,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         String cacheString = MainActivity.sharedPref.getString("cache", "{}");
 
+        //cacheing
         try {
             MainActivity.cacheJSON = new JSONObject(cacheString);
         } catch (JSONException e) {
@@ -134,11 +177,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Other Stuff
+        //Animation objects
         vertAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_ver1);
         horAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_hor1);
 
+        //initialization of animation
         initAnim();
+        //initialization of background sound
         bgSound();
+        //initialization of choosinCountry
         choosingCountry();
 
         /*Font testing*/
@@ -148,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Other Stuff
+        //Initialization of listeners object
         listeners = new ButtonListeners(country1, country2, country3, country4, country5, country6);
         listeners.contry1Listener();
     }
@@ -159,6 +207,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //MENU ITEMS
+    // (Helpers in order to add more countries on graph (something we wanted to do but we didn't manage to do because of the lack of time)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -259,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
     // HelloChart
     public class PlaceholderFragment extends Fragment {
 
+        //Objects of HelloChart lib
         private LineChartView chart;
         private LineChartData data;
         private int maxNumberOfLines = 6;
@@ -274,22 +326,30 @@ public class MainActivity extends AppCompatActivity {
         private boolean isCubic = false;
         private boolean hasLabelForSelected = false;
         private boolean pointsHaveDifferentColor;
+        //BackGroundTask (this brings data on graph)
         public BackgroundTask bt;
+        //helpers
         MenuItem itm;
+        //last state = last country selected (updates every time)
+        // (Helper in order to add more countries on graph (something we wanted to do but we didn't manage to do because of the lack of time)
         public String lastState;
 
 
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            //initialize the graph
             setHasOptionsMenu(true);
             View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
-            lastState = "gb";
+            //last state at start is empty
+            lastState = "";
+            //initialization of background task
             bt = new BackgroundTask();
 
+            //infoButton listener (Pop-up)
             infoButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     startActivity(new Intent(MainActivity.this,Pop.class));
@@ -377,80 +437,108 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            //country1 listener (UK)
             country1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (UK)
                     bt.execute("gb");
+                    //last state = the country selected
                     lastState = "gb";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
                     countriesOnGraph[0] = true;
                 }
             });
+            //country2 listener (US)
             country2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (US)
                     bt.execute("us");
+                    //last state = the country selected
                     lastState = "us";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
                     countriesOnGraph[1] = true;
                 }
             });
-
+            //country3 listener (DE)
             country3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (DE)
                     bt.execute("de");
+                    //last state = the country selected
                     lastState = "de";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
                     countriesOnGraph[2] = true;
                 }
             });
+            //country4 listener (AUS)
             country4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (AUS)
                     bt.execute("aus");
+                    //last state = the country selected
                     lastState = "aus";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
                     countriesOnGraph[3] = true;
                 }
             });
-
+            //country5 listener (IND)
             country5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (IND)
                     bt.execute("ind");
+                    //last state = the country selected
                     lastState = "ind";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
                     countriesOnGraph[4] = true;
                 }
             });
+            //country6 listener (CN)
             country6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //new background task
                     bt = new BackgroundTask();
+                    //execute the country (CN)
                     bt.execute("cn");
+                    //last state = the country selected
                     lastState = "cn";
 
+                    //change the states of countriesOnGraph
                     for(int i=0; i<countriesOnGraph.length; ++i)
                         countriesOnGraph[i] = false;
 
@@ -458,9 +546,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            //return of rootView
             return rootView;
         }
 
+        //reset of viewPort (RESET THE GRAPH)
         private void resetViewport() {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
@@ -472,12 +562,15 @@ public class MainActivity extends AppCompatActivity {
             chart.setCurrentViewport(v);
         }
 
+        //LINES ON GRAPH(LINES OF INDICATORS WILL APPEAR ON GRAPH)
         public Line exportsLine;
         public Line GDPLine;
 
-        //protected void renderLines(HashMap exportsData, HashMap GDPData) {
+
+        //LINES RENDER
         protected void renderLines(HashMap exportsData, HashMap GDPData) {
 
+            //COMPARATOR IN ORDER TO SORT THE DATA, IN ORDER TO BE CORRECTLY SHOW ON GRAPH
             class stringComparator implements Comparator<Map.Entry<Integer, Float>> {
                 @Override
                 public int compare(Map.Entry<Integer, Float> lhs, Map.Entry<Integer, Float> rhs) {
@@ -492,8 +585,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+            //ARRAYLIST OF LINES(YOU CAN ADD AS MANY LINES AS YOU WANT TO BE SHOWN)
+            //IN OUR CASE JUST 2 REPRESENTING THE INDICATORS
             List<Line> lines = new ArrayList<Line>();
 
+            //Points of the first indicator
+            //sort them
             List<PointValue> exportsValues = new ArrayList<PointValue>();
             Set<Map.Entry<Integer, Float>> exportsEntrySet = exportsData.entrySet();
             SortedSet<Map.Entry<Integer, Float>> sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
@@ -513,6 +610,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+            //Points of the second indicator
+            //sort them
             List<PointValue> GDPValues = new ArrayList<PointValue>();
             Set<Map.Entry<Integer, Float>> GDPEntrySet = GDPData.entrySet();
             sortedSet1 = new TreeSet<>(new stringComparator());
@@ -526,13 +625,16 @@ public class MainActivity extends AppCompatActivity {
                 GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
             }
 
+            //add points of the first indicator on line
             exportsLine = new Line(exportsValues);
+            //add points of the second indicator on line
             GDPLine = new Line(GDPValues);
 
+            //coloring the lines as show in legend (KEY)
+            setColors(cnt);
 
-          setColors(cnt);
-
-            //exportsLine.setColor(ChartUtils.COLOR_RED);
+            //ui for the line
+            //initialize the way it look
             exportsLine.setShape(shape);
             exportsLine.setCubic(isCubic);
             exportsLine.setFilled(isFilled);
@@ -542,9 +644,8 @@ public class MainActivity extends AppCompatActivity {
             exportsLine.setHasPoints(hasPoints);
 
 
-
-
-            //GDPLine.setColor(ChartUtils.COLOR_BLUE);
+            //ui for the line
+            //initialize the way it look
             GDPLine.setShape(shape);
             GDPLine.setCubic(isCubic);
             GDPLine.setFilled(isFilled);
@@ -553,12 +654,15 @@ public class MainActivity extends AppCompatActivity {
             GDPLine.setHasLines(hasLines);
             GDPLine.setHasPoints(hasPoints);
 
+            //add the two lines in the arraylist
             lines.add(GDPLine);
             lines.add(exportsLine);
 
+            //give the lines to data in order to put them on graph (to show them)
             data = new LineChartData(lines);
 
 
+            //axes, initialization, the way they look etc.
             if (hasAxes) {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
@@ -577,11 +681,10 @@ public class MainActivity extends AppCompatActivity {
 
             data.setBaseValue(Float.NEGATIVE_INFINITY);
             chart.setLineChartData(data);
-//            chart.setViewportCalculationEnabled(false);
 
-//            resetViewport();
         }
 
+        //coloring the lines (as shown on legend)
         public void setColors(String s){
             switch(s){
                 case "gb":
@@ -614,6 +717,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        //JSON PARSER
         protected void parseData(String exportsJson, String GDPJson) {
 
             HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
@@ -645,8 +749,15 @@ public class MainActivity extends AppCompatActivity {
             renderLines(exportsData, GDPData);
         }
 
+        //cnt = country of current state
         public String cnt;
 
+        //background task where you can find
+        //reader
+        //cache
+        //execute
+        //fetch the data
+        //http request
         public class BackgroundTask extends AsyncTask<String, Void, Void> {
 
             @Override
@@ -733,6 +844,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Other Stuff
     /*Intro*/
+    //ANIMATION FUNCTION
     public void initAnim() {
 
         mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
@@ -743,6 +855,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //BACKGROUND SOUND FUNCTION
     public void bgSound() {
         mediaPlayer = MediaPlayer.create(this, R.raw.music_play);
         bgMusik.setOnClickListener(new View.OnClickListener() {
@@ -759,6 +872,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //initialization of country buttons
     public void choosingCountry() {
 
         countries = (LinearLayout) findViewById(R.id.countries);

@@ -15,6 +15,9 @@ package com.example.amosmadalinneculau.googlechartapiexample;
 /**
  * Created by Sidd on 09/12/2015.
  */
+
+//Pop-up Class
+    //shows when the info button is pressed
 public class Pop extends Activity {
 
     protected Button closeBtn;
@@ -27,6 +30,7 @@ public class Pop extends Activity {
 
         i = new Intent(this, MainActivity.class);
 
+        //ui
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 

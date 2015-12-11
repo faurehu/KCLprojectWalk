@@ -3,6 +3,9 @@ package com.example.amosmadalinneculau.googlechartapiexample;
 /**
  * Created by amosmadalinneculau on 28.11.2015.
  */
+
+//helper class
+    //a point has 2 values etc
 public class Point {
 
     private String x;

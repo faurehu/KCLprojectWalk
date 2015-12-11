@@ -17,6 +17,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 
+//new colors added
+
 public abstract class ChartUtils {
     public static final int DEFAULT_COLOR = Color.parseColor("#DFDFDF");
     public static final int DEFAULT_DARKEN_COLOR = Color.parseColor("#DDDDDD");
