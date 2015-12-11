@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -647,7 +646,8 @@ public class MainActivity extends AppCompatActivity {
                         exportsData.put(Integer.parseInt((String) exportsNode.get("date")), Float.parseFloat((String) exportsNode.get("value")));
                         GDPData.put(Integer.parseInt((String) GDPNode.get("date")), Float.parseFloat((String) GDPNode.get("value")));
                     } catch (ClassCastException e) {
-                        Log.e("ClassCastException", e.toString());
+                        Log.e("ClassCastException", e.getMessage());
+                        Log.e("Null exports value", exportsNode.getString("date"));
                     }
                 }
             } catch (JSONException e) {
