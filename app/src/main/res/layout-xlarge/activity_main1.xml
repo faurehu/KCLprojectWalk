@@ -47,16 +47,6 @@
                 android:id="@+id/frameLayout"
                 android:layout_weight="0.87">
 
-                <ImageButton
-                    android:id="@+id/info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:background="@null"
-                    android:src="@drawable/info3"
-                    android:layout_marginStart="136dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/ourClaim" />
             </FrameLayout>
 
             <include
@@ -89,5 +79,16 @@
 
 
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:background="@null"
+        android:src="@drawable/info3"
+        android:layout_alignBottom="@+id/toggleMusik"
+        android:layout_toStartOf="@+id/toggleMusik"
+        android:layout_marginEnd="213dp" />
 
 </RelativeLayout>
