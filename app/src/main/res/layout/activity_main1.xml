@@ -16,26 +16,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="35dp" />
 
-    <ImageButton
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@null"
-        android:src="@drawable/info3"
-        android:layout_marginStart="136dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ourClaim" />
-    <ToggleButton
-        android:id="@+id/toggleMusik"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/music_playing"
-        android:textOff=""
-        android:textOn=""
-        android:layout_alignParentRight="true"
-        android:checked="false" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +34,18 @@
                 android:layout_width="729dp"
                 android:layout_height="319dp"
                 android:id="@+id/frameLayout"
-                android:layout_weight="0.52"></FrameLayout>
+                android:layout_weight="0.52">
+
+                <ImageButton
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:background="@null"
+                    android:src="@drawable/info3"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ourClaim" />
+            </FrameLayout>
 
             <include
                 android:id="@+id/togbg"
@@ -86,5 +77,17 @@
 
 
     </RelativeLayout>
+
+    <ToggleButton
+        android:id="@+id/toggleMusik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/music_playing"
+        android:textOff=""
+        android:textOn=""
+        android:checked="false"
+        android:layout_gravity="left|top"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -16,16 +16,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="35dp" />
 
-    <ImageButton
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@null"
-        android:src="@drawable/info3"
-        android:layout_marginStart="136dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ourClaim" />
     <ToggleButton
         android:id="@+id/toggleMusik"
         android:layout_width="wrap_content"
@@ -54,7 +44,19 @@
                 android:layout_width="807dp"
                 android:layout_height="319dp"
                 android:id="@+id/frameLayout"
-                android:layout_weight="1.05"></FrameLayout>
+                android:layout_weight="1.05">
+
+                <ImageButton
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:background="@null"
+                    android:src="@drawable/info3"
+                    android:layout_marginStart="136dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/ourClaim" />
+            </FrameLayout>
 
             <include
                 android:id="@+id/togbg"
