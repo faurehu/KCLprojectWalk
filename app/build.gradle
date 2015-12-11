@@ -24,7 +24,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.github.markushi:circlebutton:1.1'
-    compile 'com.kyleduo.switchbutton:library:1.2.9'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
-    compile 'tyrantgit:explosionfield:1.0.1'
 }
