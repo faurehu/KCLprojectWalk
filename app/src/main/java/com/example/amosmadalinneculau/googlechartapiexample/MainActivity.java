@@ -1,5 +1,6 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,6 +52,8 @@ import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
+import tyrantgit.explosionfield.ExplosionField;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,14 +66,11 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
-    public static ImageButton buttonSquare;
-    public static ImageButton buttonLabels;
-    public static ImageButton buttonToggleFilled;
-    public static ImageButton buttonReset;
+    public static ImageButton toggleArea, square, toggleLabels, reset, infoButton;
+
 
     static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
-
 
 
     public static at.markushi.ui.CircleButton country1;
@@ -78,32 +79,70 @@ public class MainActivity extends AppCompatActivity {
     public static at.markushi.ui.CircleButton country4;
     public static at.markushi.ui.CircleButton country5;
     public static at.markushi.ui.CircleButton country6;
-
+    public static boolean []countriesOnGraph;
+    public ArrayList<String> cntToAdd;
 
 
     public static ButtonListeners listeners;
+
+    public void printState(){
+        for(int i=0; i<countriesOnGraph.length; ++i)
+            Log.i("Country["+i+"]: ",""+countriesOnGraph[i]);
+    }
+
+    public void deselectAll(){
+        for(int i=0; i<countriesOnGraph.length; ++i)
+            countriesOnGraph[i] = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
 
-        //FindView button
-        buttonSquare = (ImageButton) findViewById(R.id.button3);
-        buttonLabels = (ImageButton) findViewById(R.id.button2);
-        buttonToggleFilled = (ImageButton) findViewById(R.id.button);
-        buttonReset = (ImageButton) findViewById(R.id.button4);
+        square = (ImageButton) findViewById(R.id.button3);
+        toggleLabels = (ImageButton) findViewById(R.id.button2);
+        toggleArea = (ImageButton) findViewById(R.id.button);
+        reset = (ImageButton) findViewById(R.id.button4);
+        infoButton = (ImageButton) findViewById(R.id.info);
+        cntToAdd = new ArrayList<String>();
 
         // HelloChart
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new PlaceholderFragment()).commit();
         }
+
+        countriesOnGraph= new boolean[6];
+        //UK
+        countriesOnGraph[0] = false;
+        //US
+        countriesOnGraph[1] = false;
+        //DE
+        countriesOnGraph[2] = false;
+        //AUS
+        countriesOnGraph[3] = false;
+        //IND
+        countriesOnGraph[4] = false;
+        //CN
+        countriesOnGraph[5] = false;
         // HelloChart
+
 
         // Other Stuff
         vertAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_ver1);
         horAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_hor1);
 
+        /*Intro Explaining Image (commented temporarily)*/
+//        explosionTest = ExplosionField.attach2Window(this);
+//        explosion = (ImageView) findViewById(R.id.imageViewExplTest);
+//        View.OnClickListener ourOnclickListener = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                explosionTest.explode(v);
+//                v.setOnClickListener(null);
+//            }
+//        };
+//        explosion.setOnClickListener(ourOnclickListener);
 
         initAnim();
         bgSound();
@@ -136,51 +175,87 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(false);
                     //delete line
                     Log.i("Reached here", "UK deselect");
+                    countriesOnGraph[0] = false;
+                    printState();
+
                 }
                 else {
                     item.setChecked(true);
                     //add line
                     Log.i("Reached here", "UK select");
+                    countriesOnGraph[0] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_US:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[1] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[1] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_AUS:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[3] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[3] = true;
+                    printState();
+
                 }
                 return true;
             case R.id.check_CN:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[5] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[5] = true;
+                    printState();
                 }
                 return true;
             case R.id.check_DE:
                 if (item.isChecked()) {
                     item.setChecked(false);
                     //delete line
+                    countriesOnGraph[2] = false;
+                    printState();
                 }
                 else {
                     item.setChecked(true);
                     //add line
+                    countriesOnGraph[2] = true;
+                    printState();
+                }
+                return true;
+            case R.id.check_IND:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                    //delete line
+                    countriesOnGraph[4] = false;
+                    printState();
+                }
+                else {
+                    item.setChecked(true);
+                    //add line
+                    countriesOnGraph[4] = true;
+                    printState();
                 }
                 return true;
             default:
@@ -188,8 +263,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     // HelloChart
-    public static class PlaceholderFragment extends Fragment {
+    public class PlaceholderFragment extends Fragment {
 
         private LineChartView chart;
         private LineChartData data;
@@ -206,30 +282,44 @@ public class MainActivity extends AppCompatActivity {
         private boolean isCubic = false;
         private boolean hasLabelForSelected = false;
         private boolean pointsHaveDifferentColor;
-
         public BackgroundTask bt;
         MenuItem itm;
+        public String lastState;
+
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             setHasOptionsMenu(true);
-            View rootView = inflater.inflate(R.layout._fragment_line_chart, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_line_chart, container, false);
             chart = (LineChartView) rootView.findViewById(R.id.chart);
             chart.setOnValueTouchListener(new ValueTouchListener());
 
+            lastState = "gb";
+            bt = new BackgroundTask();
+
+            infoButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,Pop.class));
+                }
+            });
+
+
             //SQUARE BUTTON LISTENER
-            buttonSquare.setOnClickListener(new View.OnClickListener() {
+            square.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(shape == ValueShape.CIRCLE)
                     {
                         shape = ValueShape.SQUARE;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
+
                     }
                     else
                     {
                         shape = ValueShape.CIRCLE;
                         renderLines(exportsData, GDPData);
+
                     }
 
                 }
@@ -237,37 +327,44 @@ public class MainActivity extends AppCompatActivity {
             //END OF SQUARE BUTTON LISTENER
 
             //TOGLE LABELS BUTTON LISTENER
-            buttonLabels.setOnClickListener(new View.OnClickListener() {
+            toggleLabels.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (hasLabels == false) {
                         hasLabels = true;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
+
                     }
 
                     else
                     {
                         hasLabels = false;
                         renderLines(exportsData, GDPData);
+
                     }
+
                 }
             });
             //END OF TOGLE LABELS LISTENER
 
             //TOGGLE FILLED
 
-            buttonToggleFilled.setOnClickListener(new View.OnClickListener() {
+            toggleArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(isFilled == false)
                     {
                         isFilled = true;
-                        renderLines(exportsData, GDPData);
+                        //renderLines(exportsData, GDPData);
+
+
                     }
                     else
                     {
                         isFilled = false;
                         renderLines(exportsData, GDPData);
+
+
                     }
 
                 }
@@ -276,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
             //END OF TOGGLE FILLED
 
             //RESET BUTTON
-            buttonReset.setOnClickListener(new View.OnClickListener() {
+            reset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     resetViewport();
@@ -286,13 +383,19 @@ public class MainActivity extends AppCompatActivity {
             });
             //END OF RESET BUTTON
 
-            bt = new BackgroundTask();
+
 
             country1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("gb");
+                    lastState = "gb";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[0] = true;
                 }
             });
             country2.setOnClickListener(new View.OnClickListener() {
@@ -300,6 +403,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("us");
+                    lastState = "us";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[1] = true;
                 }
             });
 
@@ -308,6 +417,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("de");
+                    lastState = "de";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[2] = true;
                 }
             });
             country4.setOnClickListener(new View.OnClickListener() {
@@ -315,6 +430,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("aus");
+                    lastState = "aus";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[3] = true;
                 }
             });
 
@@ -323,6 +444,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("ind");
+                    lastState = "ind";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[4] = true;
                 }
             });
             country6.setOnClickListener(new View.OnClickListener() {
@@ -330,12 +457,17 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     bt = new BackgroundTask();
                     bt.execute("cn");
+                    lastState = "cn";
+
+                    for(int i=0; i<countriesOnGraph.length; ++i)
+                        countriesOnGraph[i] = false;
+
+                    countriesOnGraph[5] = true;
                 }
             });
 
             return rootView;
         }
-
 
         private void resetViewport() {
             // Reset viewport height range to (0,100)
@@ -348,6 +480,10 @@ public class MainActivity extends AppCompatActivity {
             chart.setCurrentViewport(v);
         }
 
+        public Line exportsLine;
+        public Line GDPLine;
+
+        //protected void renderLines(HashMap exportsData, HashMap GDPData) {
         protected void renderLines(HashMap exportsData, HashMap GDPData) {
 
             class stringComparator implements Comparator<Map.Entry<Integer, Float>> {
@@ -363,11 +499,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+
             List<Line> lines = new ArrayList<Line>();
 
             List<PointValue> exportsValues = new ArrayList<PointValue>();
             Set<Map.Entry<Integer, Float>> exportsEntrySet = exportsData.entrySet();
             SortedSet<Map.Entry<Integer, Float>> sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            SortedSet<Map.Entry<Integer, Float>> sortedSet1 = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
             Iterator it = exportsEntrySet.iterator();
             while(it.hasNext()) {
                 sortedSet.add((Map.Entry)it.next());
@@ -378,24 +516,36 @@ public class MainActivity extends AppCompatActivity {
                 exportsValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
             }
 
+            for(int i=0; i<exportsValues.size(); ++i){
+                Log.i("FIRST LINE Value: ",""+exportsValues.get(i).toString());
+            }
+
+
             List<PointValue> GDPValues = new ArrayList<PointValue>();
-            Set<Map.Entry<Integer, Float>> GDPEntrySet = exportsData.entrySet();
-            sortedSet = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            Set<Map.Entry<Integer, Float>> GDPEntrySet = GDPData.entrySet();
+            sortedSet1 = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
             it = GDPEntrySet.iterator();
             while(it.hasNext()) {
-                sortedSet.add((Map.Entry)it.next());
+                sortedSet1.add((Map.Entry)it.next());
             }
-            it = sortedSet.iterator();
+            it = sortedSet1.iterator();
             while(it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
-                GDPValues.add(new PointValue(1,1));
+//
             }
 
-            Line exportsLine = new Line(exportsValues);
-            Line GDPLine = new Line(GDPValues);
+            for(int i=0; i<GDPValues.size(); ++i){
+                Log.i("SECOND LINE Value: ",""+GDPValues.get(i).toString());
+            }
 
-            exportsLine.setColor(ChartUtils.COLOR_ORANGE);
+            exportsLine = new Line(exportsValues);
+            GDPLine = new Line(GDPValues);
+
+
+          setColors(cnt);
+
+            //exportsLine.setColor(ChartUtils.COLOR_RED);
             exportsLine.setShape(shape);
             exportsLine.setCubic(isCubic);
             exportsLine.setFilled(isFilled);
@@ -404,7 +554,10 @@ public class MainActivity extends AppCompatActivity {
             exportsLine.setHasLines(hasLines);
             exportsLine.setHasPoints(hasPoints);
 
-            GDPLine.setColor(ChartUtils.COLOR_BLUE);
+
+
+
+            //GDPLine.setColor(ChartUtils.COLOR_BLUE);
             GDPLine.setShape(shape);
             GDPLine.setCubic(isCubic);
             GDPLine.setFilled(isFilled);
@@ -417,6 +570,7 @@ public class MainActivity extends AppCompatActivity {
             lines.add(exportsLine);
 
             data = new LineChartData(lines);
+
 
             if (hasAxes) {
                 Axis axisX = new Axis();
@@ -439,6 +593,38 @@ public class MainActivity extends AppCompatActivity {
 //            chart.setViewportCalculationEnabled(false);
 
 //            resetViewport();
+        }
+
+        public void setColors(String s){
+            switch(s){
+                case "gb":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_RED);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BLUE);
+                    break;
+                case "us":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_YELLOW);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_GREEN);
+                    break;
+                case "de":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_PINK);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_ORANGE);
+                    break;
+                case "aus":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_MAROON);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_GRAY);
+                    break;
+                case "ind":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BROWN);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_PURPLE);
+                    break;
+                case "cn":
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_WHITE);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.COLOR_BLACK);
+                    break;
+                default:
+                    GDPLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.DEFAULT_COLOR);
+                    exportsLine.setColor(com.example.amosmadalinneculau.googlechartapiexample.ChartUtils.DEFAULT_COLOR);
+            }
         }
 
         protected void parseData(String exportsJson, String GDPJson) {
@@ -471,19 +657,28 @@ public class MainActivity extends AppCompatActivity {
             renderLines(exportsData, GDPData);
         }
 
+        public String cnt;
+
         public class BackgroundTask extends AsyncTask<String, Void, Void> {
+
             @Override
             protected Void doInBackground(String... country) {
+
+
+                cnt = country[0];
                 String GDPUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
                 String exportsUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
+
+                        //String GDPUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
+                        //String exportsUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
                 try {
-                    String exportsResponse  = readData(exportsUrl);
+                    String exportsResponse = readData(exportsUrl);
                     String GDPResponse = readData(GDPUrl);
                     Log.i("exports response", exportsUrl);
                     Log.i("gdp response", GDPUrl);
                     parseData(exportsResponse, GDPResponse);
                 } catch (IOException e) {
-                    Log.e("ERROR", "IOException");
+                            Log.e("ERROR", "IOException");
                 }
                 return null;
             }
@@ -517,7 +712,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onValueDeselected() {}
+            public void onValueDeselected() {
+                // TODO Auto-generated method stub
+
+            }
 
         }
     }
@@ -525,7 +723,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Other Stuff
     /*Intro*/
-   public void initAnim() {
+    public void initAnim() {
 
         mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         mainLayout.startAnimation(vertAnimeTra);

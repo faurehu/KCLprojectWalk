@@ -47,14 +47,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:id="@+id/linearLayout2">
 
 
             <FrameLayout
-                android:layout_width="729dp"
+                android:layout_width="972dp"
                 android:layout_height="319dp"
                 android:id="@+id/frameLayout"
-                android:layout_weight="0.52"></FrameLayout>
+                android:layout_weight="0.87"></FrameLayout>
 
             <include
                 android:id="@+id/togbg"
@@ -73,8 +74,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/countries"
-            android:layout_alignEnd="@+id/countries"></include>
+            android:layout_alignEnd="@+id/countries"
+            android:layout_toEndOf="@+id/linearLayout2"></include>
 
         <include
             android:layout_alignParentRight="true"

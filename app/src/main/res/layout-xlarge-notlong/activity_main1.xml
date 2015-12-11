@@ -51,17 +51,16 @@
 
 
             <FrameLayout
-                android:layout_width="729dp"
+                android:layout_width="807dp"
                 android:layout_height="319dp"
                 android:id="@+id/frameLayout"
-                android:layout_weight="0.52"></FrameLayout>
+                android:layout_weight="1.05"></FrameLayout>
 
             <include
                 android:id="@+id/togbg"
                 layout="@layout/layout_toggle_buttons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"></include>
+                android:layout_height="wrap_content"></include>
 
 
         </LinearLayout>
@@ -73,7 +72,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/countries"
             android:layout_alignEnd="@+id/countries"></include>
 
         <include

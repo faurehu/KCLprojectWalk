@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@null"
-            android:src="@drawable/togglearea"
-            android:layout_marginRight="10dp" />
+            android:src="@drawable/toggle_area2"
+            android:layout_marginRight="5dp" />
 
         <ImageButton
             android:id="@+id/button2"
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@null"
-            android:src="@drawable/togglelabels"
-            android:layout_marginRight="10dp" />
+            android:src="@drawable/toggle_labels2"
+            android:layout_marginRight="5dp" />
 
         <ImageButton
             android:id="@+id/button3"
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@null"
-            android:src="@drawable/squarepoints"
-            android:layout_marginRight="10dp" />
+            android:src="@drawable/square_points2"
+            android:layout_marginRight="5dp" />
 
         <ImageButton
             android:id="@+id/button4"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@null"
-            android:src="@drawable/reset" />
+            android:src="@drawable/reset2" />
 
 
     </LinearLayout>

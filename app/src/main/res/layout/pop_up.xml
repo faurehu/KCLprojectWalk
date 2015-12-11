@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bklow">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="When interest rates decrease, the cost of borrowing is lowered. As a result, this encourages spending and investment. This leads to an increase in aggregate demand, which leads to an increase in Gross Domestic Product. However, this rise in aggregate may lead to inflation.
+
+Due to increased consumer spending and inflationary pressures, there will be a rise in the amount of imports purchased.
+"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</LinearLayout>

@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/k">
+
         <ImageButton
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="UK Interest Rates"
             android:id="@+id/ukIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#0097f4"
             />
 
@@ -30,18 +32,21 @@
             android:layout_height="wrap_content"
             android:text="UK Imports"
             android:id="@+id/ukIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#f10f0f" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="US Interest Rates"
             android:id="@+id/usIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#1ea068" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="US imports"
             android:id="@+id/usIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#fff703" />
 
         <TextView
@@ -49,6 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Germany Interest Rates"
             android:id="@+id/GerIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#f5ae0a" />
 
         <TextView
@@ -56,6 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Germany Imports"
             android:id="@+id/GerIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#ff69b4" />
 
         <TextView
@@ -63,6 +70,7 @@
             android:layout_height="wrap_content"
             android:text="Australia Interest Rates"
             android:id="@+id/AusIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#d3d3d3" />
 
         <TextView
@@ -70,6 +78,7 @@
             android:layout_height="wrap_content"
             android:text="Australia Imports"
             android:id="@+id/AusIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#b03060" />
 
         <TextView
@@ -77,6 +86,7 @@
             android:layout_height="wrap_content"
             android:text="India Interest Rates"
             android:id="@+id/IndIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#802a2a" />
 
         <TextView
@@ -84,6 +94,7 @@
             android:layout_height="wrap_content"
             android:text="India Imports"
             android:id="@+id/IndIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#551a8b" />
 
         <TextView
@@ -91,6 +102,7 @@
             android:layout_height="wrap_content"
             android:text="China Interest Rates"
             android:id="@+id/cnIR"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff"
             android:background="#000000" />
 
@@ -99,10 +111,18 @@
             android:layout_height="wrap_content"
             android:text="China Imports"
             android:id="@+id/cnIM"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:background="#ffffff" />
 
     </LinearLayout>
 
-
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:src="@drawable/key"
+        />
 
 </LinearLayout>
