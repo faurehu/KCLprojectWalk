@@ -1,6 +1,8 @@
 package com.example.amosmadalinneculau.googlechartapiexample;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -42,6 +44,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import at.markushi.ui.CircleButton;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -51,9 +54,6 @@ import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
-import tyrantgit.explosionfield.ExplosionField;
-
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,12 +65,14 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     TextView ourClaim;
 
+    public static JSONObject cacheJSON;
+    public static SharedPreferences sharedPref;
+
     public static ImageButton toggleArea, square, toggleLabels, reset, infoButton;
 
 
     static HashMap<Integer, Float> exportsData = new HashMap<Integer, Float>();
     static HashMap<Integer, Float> GDPData = new HashMap<Integer, Float>();
-
 
     public static at.markushi.ui.CircleButton country1;
     public static at.markushi.ui.CircleButton country2;
@@ -89,11 +91,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Country["+i+"]: ",""+countriesOnGraph[i]);
     }
 
-    public void deselectAll(){
-        for(int i=0; i<countriesOnGraph.length; ++i)
-            countriesOnGraph[i] = false;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +102,15 @@ public class MainActivity extends AppCompatActivity {
         reset = (ImageButton) findViewById(R.id.button4);
         infoButton = (ImageButton) findViewById(R.id.info);
         cntToAdd = new ArrayList<String>();
+
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String cacheString = MainActivity.sharedPref.getString("cache", "{}");
+
+        try {
+            MainActivity.cacheJSON = new JSONObject(cacheString);
+        } catch (JSONException e) {
+            Log.e("JSONException", e.getMessage());
+        }
 
         // HelloChart
         if (savedInstanceState == null) {
@@ -131,18 +137,6 @@ public class MainActivity extends AppCompatActivity {
         vertAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_ver1);
         horAnimeTra = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate_hor1);
 
-        /*Intro Explaining Image (commented temporarily)*/
-//        explosionTest = ExplosionField.attach2Window(this);
-//        explosion = (ImageView) findViewById(R.id.imageViewExplTest);
-//        View.OnClickListener ourOnclickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                explosionTest.explode(v);
-//                v.setOnClickListener(null);
-//            }
-//        };
-//        explosion.setOnClickListener(ourOnclickListener);
-
         initAnim();
         bgSound();
         choosingCountry();
@@ -156,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         // Other Stuff
         listeners = new ButtonListeners(country1, country2, country3, country4, country5, country6);
         listeners.contry1Listener();
-
     }
 
     @Override
@@ -522,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
 
             List<PointValue> GDPValues = new ArrayList<PointValue>();
             Set<Map.Entry<Integer, Float>> GDPEntrySet = GDPData.entrySet();
-            sortedSet1 = new TreeSet<Map.Entry<Integer, Float>>(new stringComparator());
+            sortedSet1 = new TreeSet<>(new stringComparator());
             it = GDPEntrySet.iterator();
             while(it.hasNext()) {
                 sortedSet1.add((Map.Entry)it.next());
@@ -531,11 +524,6 @@ public class MainActivity extends AppCompatActivity {
             while(it.hasNext()) {
                 Map.Entry entry = (Map.Entry) it.next();
                 GDPValues.add(new PointValue((Integer) entry.getKey(), (Float) entry.getValue()));
-//
-            }
-
-            for(int i=0; i<GDPValues.size(); ++i){
-                Log.i("SECOND LINE Value: ",""+GDPValues.get(i).toString());
             }
 
             exportsLine = new Line(exportsValues);
@@ -663,27 +651,49 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(String... country) {
-
-
                 cnt = country[0];
-                String GDPUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
-                String exportsUrl = "http://api.worldbank.org/countries/" + country[0] + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
-
-                        //String GDPUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
-                        //String exportsUrl = "http://api.worldbank.org/countries/" + "gb" + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
-                try {
-                    String exportsResponse = readData(exportsUrl);
-                    String GDPResponse = readData(GDPUrl);
-                    Log.i("exports response", exportsUrl);
-                    Log.i("gdp response", GDPUrl);
-                    parseData(exportsResponse, GDPResponse);
-                } catch (IOException e) {
-                            Log.e("ERROR", "IOException");
-                }
+                checkCache(cnt);
                 return null;
             }
 
-            public String readData(String urlName) throws IOException {
+            public void checkCache(String country) {
+                if (MainActivity.cacheJSON.has(country)) {
+                    try {
+                        JSONObject cacheCountry = (JSONObject) MainActivity.cacheJSON.get(country);
+                        Log.i("cache country", cacheCountry.toString());
+                        String imports = (String) cacheCountry.get("imports");
+                        String interest = (String) cacheCountry.get("interests");
+                        parseData(imports, interest);
+                    } catch(JSONException e) {
+                        Log.e("JSONException", e.getMessage());
+                    }
+                } else {
+                    fetchData(country);
+                }
+            }
+
+            public void fetchData(String countryName) {
+                String interestsUrl = "http://api.worldbank.org/countries/" + countryName + "/indicators/FR.INR.RINR/?date=1960:2010&format=json&per_page=51";
+                String importsUrl = "http://api.worldbank.org/countries/" + countryName + "/indicators/NE.IMP.GNFS.ZS/?date=1960:2010&format=json&per_page=51";
+                try {
+                    String interestsResponse  = httpRequest(interestsUrl);
+                    String importsResponse = httpRequest(importsUrl);
+                    JSONObject newCountry = new JSONObject();
+                    newCountry.put("interests", interestsResponse);
+                    newCountry.put("imports", importsResponse);
+                    MainActivity.cacheJSON.put(countryName, newCountry);
+                    SharedPreferences.Editor editor = MainActivity.sharedPref.edit();
+                    editor.putString("cache", MainActivity.cacheJSON.toString());
+                    editor.commit();
+                    parseData(interestsResponse, importsResponse);
+                } catch (IOException e) {
+                    Log.e("ERROR", e.getMessage());
+                } catch (JSONException e) {
+                    Log.e("ERROR", e.getMessage());
+                }
+            }
+
+            public String httpRequest(String urlName) throws IOException {
                 StringBuffer buffer = new StringBuffer();
                 URL url = new URL(urlName);
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
